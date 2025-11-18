@@ -92,7 +92,7 @@ export default function PrintPage() {
         top: '20px',
         left: '50%',
         transform: 'translateX(-50%)',
-        background: '#eb6339',
+        background: '#ef6b3b',
         color: 'white',
         padding: '15px 30px',
         borderRadius: '8px',
@@ -144,7 +144,7 @@ export default function PrintPage() {
           <div style={{
             width: '60px',
             height: '3px',
-            background: 'linear-gradient(90deg, #eb6339 0%, #f59e0b 100%)',
+            background: 'linear-gradient(90deg, #ef6b3b 0%, #ddd7d4 100%)',
             margin: '0 auto 20px',
             borderRadius: '2px',
           }} />
