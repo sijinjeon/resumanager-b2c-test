@@ -107,131 +107,168 @@ export default function PrintPage() {
       <div style={{
         width: '210mm',
         minHeight: '297mm',
-        background: '#ffffff',
-        padding: '40px 30px',
+        background: 'linear-gradient(to bottom, #fafafa 0%, #ffffff 100%)',
+        padding: '50px 40px',
         fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", "Apple SD Gothic Neo", sans-serif',
       }}>
-        <div style={{ fontSize: '48px', marginBottom: '15px' }}>💼</div>
-        
-        <h1 style={{
-          fontSize: '32px',
-          fontWeight: 'bold',
-          color: '#eb6339',
-          marginBottom: '6px',
-          textAlign: 'center',
-        }}>
-          커리어 강점 진단 결과
-        </h1>
-        
-        <p style={{
-          fontSize: '12px',
-          color: '#999999',
-          marginBottom: '15px',
-          textAlign: 'center',
-        }}>
-          Career Strength Report
-        </p>
-
-        <div style={{
-          width: '80px',
-          height: '2px',
-          background: '#eb6339',
-          margin: '0 auto 15px',
-        }} />
-
+        {/* 헤더 */}
         <div style={{
           textAlign: 'center',
-          fontSize: '12px',
-          color: '#666666',
-          marginBottom: '30px',
+          marginBottom: '35px',
         }}>
-          <span style={{ marginRight: '15px' }}><strong>이름:</strong> {userName}</span>
-          <span><strong>진단일:</strong> {date}</span>
+          <div style={{ 
+            fontSize: '56px', 
+            marginBottom: '20px',
+            filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.08))',
+          }}>💼</div>
+          
+          <h1 style={{
+            fontSize: '36px',
+            fontWeight: '700',
+            color: '#0f172a',
+            marginBottom: '8px',
+            letterSpacing: '-0.02em',
+          }}>
+            커리어 강점 진단 결과
+          </h1>
+          
+          <p style={{
+            fontSize: '13px',
+            color: '#64748b',
+            marginBottom: '20px',
+            fontWeight: '500',
+          }}>
+            Career Strength Report
+          </p>
+
+          <div style={{
+            width: '60px',
+            height: '3px',
+            background: 'linear-gradient(90deg, #eb6339 0%, #f59e0b 100%)',
+            margin: '0 auto 20px',
+            borderRadius: '2px',
+          }} />
+
+          <div style={{
+            display: 'inline-block',
+            background: '#f8fafc',
+            border: '1px solid #e2e8f0',
+            borderRadius: '8px',
+            padding: '8px 24px',
+            fontSize: '12px',
+            color: '#475569',
+          }}>
+            <span style={{ marginRight: '20px', fontWeight: '600' }}>
+              <span style={{ color: '#94a3b8' }}>이름</span> {userName}
+            </span>
+            <span style={{ fontWeight: '600' }}>
+              <span style={{ color: '#94a3b8' }}>진단일</span> {date}
+            </span>
+          </div>
         </div>
 
-        {/* 메인 컨텐츠 - 2단 레이아웃 */}
+        {/* 메인 컨텐츠 - shadcn UI 스타일 2단 레이아웃 */}
         <div style={{
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',
-          gap: '20px',
-          marginBottom: '20px',
+          gap: '24px',
+          marginBottom: '24px',
         }}>
-          {/* Why 성향 */}
+          {/* Why 성향 - shadcn 카드 스타일 */}
           <div style={{
-            background: hexToRgba(whyPersonality.color, 0.08),
-            border: `2px solid ${whyPersonality.color}`,
-            borderRadius: '10px',
-            padding: '20px',
+            background: '#ffffff',
+            border: '1px solid #e2e8f0',
+            borderRadius: '12px',
+            padding: '24px',
+            boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)',
           }}>
+            {/* 헤더 */}
             <div style={{
               display: 'flex',
-              alignItems: 'center',
-              gap: '12px',
-              marginBottom: '12px',
-              paddingBottom: '12px',
-              borderBottom: `2px solid ${hexToRgba(whyPersonality.color, 0.2)}`,
+              alignItems: 'flex-start',
+              gap: '16px',
+              marginBottom: '16px',
+              paddingBottom: '16px',
+              borderBottom: '1px solid #e2e8f0',
             }}>
-              <div style={{ fontSize: '40px' }}>
+              <div style={{ 
+                fontSize: '48px',
+                filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.1))',
+              }}>
                 {whyPersonality.icon}
               </div>
-              <div>
+              <div style={{ flex: 1 }}>
                 <div style={{
-                  fontSize: '10px',
-                  color: '#999999',
-                  marginBottom: '2px',
+                  fontSize: '11px',
+                  color: '#64748b',
+                  fontWeight: '500',
+                  marginBottom: '4px',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.05em',
                 }}>
-                  나의 Why 성향
+                  Why · 내가 추구하는 것
                 </div>
                 <h2 style={{
-                  fontSize: '20px',
-                  fontWeight: 'bold',
-                  color: whyPersonality.color,
-                  marginBottom: '2px',
+                  fontSize: '24px',
+                  fontWeight: '700',
+                  color: '#0f172a',
+                  marginBottom: '4px',
+                  letterSpacing: '-0.01em',
                 }}>
                   {whyPersonality.name}
                 </h2>
                 <p style={{
-                  fontSize: '10px',
-                  color: '#666666',
+                  fontSize: '11px',
+                  color: '#94a3b8',
+                  fontWeight: '500',
                 }}>
                   {whyPersonality.nameEn}
                 </p>
               </div>
             </div>
 
+            {/* 설명 */}
             <p style={{
               fontSize: '11px',
-              lineHeight: '1.6',
-              color: '#444444',
-              marginBottom: '12px',
+              lineHeight: '1.7',
+              color: '#334155',
+              marginBottom: '16px',
+              textAlign: 'justify',
             }}>
               {whyPersonality.description}
             </p>
 
-            <div style={{ marginBottom: '12px' }}>
+            {/* 키워드 */}
+            <div style={{ marginBottom: '16px' }}>
               <div style={{
                 fontSize: '11px',
-                fontWeight: 'bold',
-                color: '#333333',
-                marginBottom: '6px',
+                fontWeight: '600',
+                color: '#0f172a',
+                marginBottom: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px',
               }}>
-                💡 대표 키워드
+                <span>💡</span>
+                <span>대표 키워드</span>
               </div>
               <div style={{
                 display: 'flex',
                 flexWrap: 'wrap',
-                gap: '5px',
+                gap: '6px',
               }}>
                 {whyPersonality.keywords.map((keyword, idx) => (
                   <span
                     key={idx}
                     style={{
-                      background: hexToRgba(whyPersonality.color, 0.15),
-                      color: whyPersonality.color,
-                      padding: '3px 8px',
-                      borderRadius: '10px',
+                      background: '#f8fafc',
+                      color: '#475569',
+                      border: '1px solid #e2e8f0',
+                      padding: '4px 10px',
+                      borderRadius: '6px',
                       fontSize: '10px',
-                      fontWeight: 'bold',
+                      fontWeight: '600',
+                      transition: 'all 0.2s',
                     }}
                   >
                     {keyword}
@@ -240,120 +277,153 @@ export default function PrintPage() {
               </div>
             </div>
 
+            {/* 강점 */}
             <div>
               <div style={{
                 fontSize: '11px',
-                fontWeight: 'bold',
-                color: '#333333',
-                marginBottom: '6px',
+                fontWeight: '600',
+                color: '#0f172a',
+                marginBottom: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px',
               }}>
-                ⭐ 주요 강점
+                <span>⭐</span>
+                <span>주요 강점</span>
               </div>
-              {whyPersonality.strengths.map((strength, idx) => (
-                <div
-                  key={idx}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'flex-start',
-                    marginBottom: '5px',
-                  }}
-                >
-                  <span style={{
-                    color: whyPersonality.color,
-                    fontSize: '12px',
-                    marginRight: '5px',
-                    fontWeight: 'bold',
-                  }}>
-                    ✓
-                  </span>
-                  <p style={{
-                    fontSize: '10px',
-                    lineHeight: '1.5',
-                    color: '#555555',
-                  }}>
-                    {strength}
-                  </p>
-                </div>
-              ))}
+              <div style={{
+                background: '#f8fafc',
+                border: '1px solid #e2e8f0',
+                borderRadius: '8px',
+                padding: '12px',
+              }}>
+                {whyPersonality.strengths.map((strength, idx) => (
+                  <div
+                    key={idx}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      marginBottom: idx < whyPersonality.strengths.length - 1 ? '8px' : '0',
+                    }}
+                  >
+                    <span style={{
+                      color: whyPersonality.color,
+                      fontSize: '14px',
+                      marginRight: '8px',
+                      fontWeight: 'bold',
+                      minWidth: '14px',
+                    }}>
+                      ✓
+                    </span>
+                    <p style={{
+                      fontSize: '10px',
+                      lineHeight: '1.6',
+                      color: '#475569',
+                      margin: 0,
+                    }}>
+                      {strength}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
-          {/* How 성향 */}
+          {/* How 성향 - shadcn 카드 스타일 */}
           <div style={{
-            background: hexToRgba(howPersonality.color, 0.08),
-            border: `2px solid ${howPersonality.color}`,
-            borderRadius: '10px',
-            padding: '20px',
+            background: '#ffffff',
+            border: '1px solid #e2e8f0',
+            borderRadius: '12px',
+            padding: '24px',
+            boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)',
           }}>
+            {/* 헤더 */}
             <div style={{
               display: 'flex',
-              alignItems: 'center',
-              gap: '12px',
-              marginBottom: '12px',
-              paddingBottom: '12px',
-              borderBottom: `2px solid ${hexToRgba(howPersonality.color, 0.2)}`,
+              alignItems: 'flex-start',
+              gap: '16px',
+              marginBottom: '16px',
+              paddingBottom: '16px',
+              borderBottom: '1px solid #e2e8f0',
             }}>
-              <div style={{ fontSize: '40px' }}>
+              <div style={{ 
+                fontSize: '48px',
+                filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.1))',
+              }}>
                 {howPersonality.icon}
               </div>
-              <div>
+              <div style={{ flex: 1 }}>
                 <div style={{
-                  fontSize: '10px',
-                  color: '#999999',
-                  marginBottom: '2px',
+                  fontSize: '11px',
+                  color: '#64748b',
+                  fontWeight: '500',
+                  marginBottom: '4px',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.05em',
                 }}>
-                  나의 How 성향
+                  How · 내가 일하는 방식
                 </div>
                 <h2 style={{
-                  fontSize: '20px',
-                  fontWeight: 'bold',
-                  color: howPersonality.color,
-                  marginBottom: '2px',
+                  fontSize: '24px',
+                  fontWeight: '700',
+                  color: '#0f172a',
+                  marginBottom: '4px',
+                  letterSpacing: '-0.01em',
                 }}>
                   {howPersonality.name}
                 </h2>
                 <p style={{
-                  fontSize: '10px',
-                  color: '#666666',
+                  fontSize: '11px',
+                  color: '#94a3b8',
+                  fontWeight: '500',
                 }}>
                   {howPersonality.nameEn}
                 </p>
               </div>
             </div>
 
+            {/* 설명 */}
             <p style={{
               fontSize: '11px',
-              lineHeight: '1.6',
-              color: '#444444',
-              marginBottom: '12px',
+              lineHeight: '1.7',
+              color: '#334155',
+              marginBottom: '16px',
+              textAlign: 'justify',
             }}>
               {howPersonality.description}
             </p>
 
-            <div style={{ marginBottom: '12px' }}>
+            {/* 키워드 */}
+            <div style={{ marginBottom: '16px' }}>
               <div style={{
                 fontSize: '11px',
-                fontWeight: 'bold',
-                color: '#333333',
-                marginBottom: '6px',
+                fontWeight: '600',
+                color: '#0f172a',
+                marginBottom: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px',
               }}>
-                💡 대표 키워드
+                <span>💡</span>
+                <span>대표 키워드</span>
               </div>
               <div style={{
                 display: 'flex',
                 flexWrap: 'wrap',
-                gap: '5px',
+                gap: '6px',
               }}>
                 {howPersonality.keywords.map((keyword, idx) => (
                   <span
                     key={idx}
                     style={{
-                      background: hexToRgba(howPersonality.color, 0.15),
-                      color: howPersonality.color,
-                      padding: '3px 8px',
-                      borderRadius: '10px',
+                      background: '#f8fafc',
+                      color: '#475569',
+                      border: '1px solid #e2e8f0',
+                      padding: '4px 10px',
+                      borderRadius: '6px',
                       fontSize: '10px',
-                      fontWeight: 'bold',
+                      fontWeight: '600',
+                      transition: 'all 0.2s',
                     }}
                   >
                     {keyword}
@@ -362,57 +432,72 @@ export default function PrintPage() {
               </div>
             </div>
 
+            {/* 강점 */}
             <div>
               <div style={{
                 fontSize: '11px',
-                fontWeight: 'bold',
-                color: '#333333',
-                marginBottom: '6px',
+                fontWeight: '600',
+                color: '#0f172a',
+                marginBottom: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px',
               }}>
-                ⭐ 주요 강점
+                <span>⭐</span>
+                <span>주요 강점</span>
               </div>
-              {howPersonality.strengths.map((strength, idx) => (
-                <div
-                  key={idx}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'flex-start',
-                    marginBottom: '5px',
-                  }}
-                >
-                  <span style={{
-                    color: howPersonality.color,
-                    fontSize: '12px',
-                    marginRight: '5px',
-                    fontWeight: 'bold',
-                  }}>
-                    ✓
-                  </span>
-                  <p style={{
-                    fontSize: '10px',
-                    lineHeight: '1.5',
-                    color: '#555555',
-                  }}>
-                    {strength}
-                  </p>
-                </div>
-              ))}
+              <div style={{
+                background: '#f8fafc',
+                border: '1px solid #e2e8f0',
+                borderRadius: '8px',
+                padding: '12px',
+              }}>
+                {howPersonality.strengths.map((strength, idx) => (
+                  <div
+                    key={idx}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      marginBottom: idx < howPersonality.strengths.length - 1 ? '8px' : '0',
+                    }}
+                  >
+                    <span style={{
+                      color: howPersonality.color,
+                      fontSize: '14px',
+                      marginRight: '8px',
+                      fontWeight: 'bold',
+                      minWidth: '14px',
+                    }}>
+                      ✓
+                    </span>
+                    <p style={{
+                      fontSize: '10px',
+                      lineHeight: '1.6',
+                      color: '#475569',
+                      margin: 0,
+                    }}>
+                      {strength}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
 
-        {/* 푸터 */}
+        {/* 푸터 - shadcn 스타일 */}
         <div style={{
-          marginTop: '20px',
-          paddingTop: '15px',
-          borderTop: '1px solid #eeeeee',
+          marginTop: '24px',
+          paddingTop: '20px',
+          borderTop: '1px solid #e2e8f0',
           textAlign: 'center',
         }}>
           <p style={{
             fontSize: '10px',
-            color: '#999999',
+            color: '#94a3b8',
+            fontWeight: '500',
           }}>
-            © 2025 Career Strength Test. All rights reserved.
+            © 2025 Career Strength Test · 커리어 강점 진단
           </p>
         </div>
       </div>
