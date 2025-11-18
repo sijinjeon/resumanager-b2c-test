@@ -39,16 +39,16 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-50 flex items-center justify-center p-4">
-      <div className="card w-full max-w-md bg-white shadow-2xl">
-        <div className="card-body">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white flex items-center justify-center p-6">
+      <div className="w-full max-w-md bg-white border border-slate-200 rounded-xl shadow-lg p-8">
           {/* 헤더 */}
-          <div className="text-center mb-6">
-            <Link href="/" className="text-3xl font-bold text-primary">
-              💼 강점진단
+          <div className="text-center mb-8">
+            <Link href="/" className="flex items-center justify-center gap-2 mb-6">
+              <span className="text-3xl">💼</span>
+              <span className="text-2xl font-bold text-slate-900">강점진단</span>
             </Link>
-            <h2 className="text-2xl font-bold mt-4 text-gray-800">로그인</h2>
-            <p className="text-gray-600 mt-2">다시 만나서 반가워요!</p>
+            <h2 className="text-2xl font-bold text-slate-900 mb-2">로그인</h2>
+            <p className="text-sm text-slate-600">다시 만나서 반가워요!</p>
           </div>
 
           {/* 에러 메시지 */}
@@ -60,56 +60,71 @@ export default function LoginPage() {
 
           {/* 로그인 폼 */}
           <form onSubmit={handleLogin} className="space-y-4">
-            {/* 이메일 */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text font-semibold">이메일</span>
+            {/* 이메일 - shadcn input */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-slate-900">
+                이메일
               </label>
               <input
                 type="email"
                 placeholder="example@email.com"
-                className="input input-bordered w-full"
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#ef6b3b] focus:border-transparent transition-all"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
 
-            {/* 비밀번호 */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text font-semibold">비밀번호</span>
-              </label>
+            {/* 비밀번호 - shadcn input */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <label className="text-sm font-medium text-slate-900">
+                  비밀번호
+                </label>
+                <Link href="/reset-password" className="text-xs text-[#ef6b3b] hover:underline">
+                  비밀번호를 잊으셨나요?
+                </Link>
+              </div>
               <input
                 type="password"
                 placeholder="비밀번호를 입력하세요"
-                className="input input-bordered w-full"
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#ef6b3b] focus:border-transparent transition-all"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
-              <label className="label">
-                <Link href="/reset-password" className="label-text-alt link link-hover">
-                  비밀번호를 잊으셨나요?
-                </Link>
-              </label>
             </div>
 
-            {/* 로그인 버튼 */}
+            {/* 로그인 버튼 - shadcn button */}
             <button
               type="submit"
-              className={`btn btn-primary w-full ${loading ? 'loading' : ''}`}
+              className="w-full px-4 py-3 text-sm font-semibold text-white bg-[#ef6b3b] hover:bg-[#ef6b3b]/90 rounded-lg transition-all shadow-sm hover:shadow disabled:opacity-50 disabled:cursor-not-allowed mt-2"
               disabled={loading}
             >
-              {loading ? '처리 중...' : '로그인'}
+              {loading ? (
+                <span className="flex items-center justify-center gap-2">
+                  <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  처리 중...
+                </span>
+              ) : '로그인'}
             </button>
           </form>
 
-          {/* 회원가입 링크 */}
-          <div className="divider">또는</div>
-          <div className="text-center">
-            <span className="text-gray-600">아직 계정이 없으신가요? </span>
-            <Link href="/signup" className="link link-primary font-semibold">
+          {/* 회원가입 링크 - shadcn 스타일 */}
+          <div className="relative my-6">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-slate-200"></div>
+            </div>
+            <div className="relative flex justify-center text-xs">
+              <span className="bg-white px-2 text-slate-500">또는</span>
+            </div>
+          </div>
+          <div className="text-center text-sm">
+            <span className="text-slate-600">아직 계정이 없으신가요? </span>
+            <Link href="/signup" className="font-semibold text-[#ef6b3b] hover:underline">
               회원가입하기
             </Link>
           </div>
