@@ -1,5 +1,5 @@
 import html2canvas from 'html2canvas'
-import jsPDF from 'jspdf'
+import { jsPDF } from 'jspdf'
 
 /**
  * HTML 요소를 PDF로 변환하여 다운로드
