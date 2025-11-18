@@ -6,10 +6,12 @@ import { useRouter } from 'next/navigation'
 import questions from '@/data/questions.json'
 import personalities from '@/data/personalities.json'
 import type { Answer, PersonalityScores, PersonalityType, Personality } from '@/lib/types'
+import { generatePDF, formatDate } from '@/lib/pdf/generator'
 
 export default function TestResultPage() {
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)
+  const [downloading, setDownloading] = useState(false)
   const [answers, setAnswers] = useState<Answer[]>([])
   const [scores, setScores] = useState<PersonalityScores | null>(null)
   const [finalWhy, setFinalWhy] = useState<PersonalityType | null>(null)
@@ -113,6 +115,29 @@ export default function TestResultPage() {
     return {
       why: whyScores[0].type,
       how: howScores[0].type
+    }
+  }
+
+  const handleDownloadPDF = async () => {
+    if (!finalWhy || !finalHow || !user) return
+    
+    setDownloading(true)
+    try {
+      await generatePDF({
+        userName: user.user_metadata?.name || user.email || '사용자',
+        date: formatDate(new Date()),
+        whyType: finalWhy,
+        howType: finalHow,
+        whyPersonality: personalities[finalWhy] as Personality,
+        howPersonality: personalities[finalHow] as Personality
+      })
+      
+      alert('PDF 다운로드가 완료되었습니다! 📄')
+    } catch (error) {
+      console.error('PDF 생성 오류:', error)
+      alert('PDF 생성 중 오류가 발생했습니다. 다시 시도해주세요.')
+    } finally {
+      setDownloading(false)
     }
   }
 
@@ -233,9 +258,17 @@ export default function TestResultPage() {
         <div className="flex flex-col sm:flex-row gap-4 mt-8">
           <button 
             className="btn btn-primary btn-lg flex-1"
-            onClick={() => alert('PDF 생성 기능은 곧 추가됩니다!')}
+            onClick={handleDownloadPDF}
+            disabled={downloading}
           >
-            📄 PDF로 다운로드
+            {downloading ? (
+              <>
+                <span className="loading loading-spinner"></span>
+                생성 중...
+              </>
+            ) : (
+              <>📄 PDF로 다운로드</>
+            )}
           </button>
           <button 
             className="btn btn-outline btn-lg flex-1"
