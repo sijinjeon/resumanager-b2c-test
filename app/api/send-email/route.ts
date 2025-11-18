@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
@@ -14,6 +12,9 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       )
     }
+
+    // Resend 인스턴스 생성 (런타임에만)
+    const resend = new Resend(process.env.RESEND_API_KEY)
 
     // PDF를 Buffer로 변환
     const pdfBuffer = Buffer.from(pdfBase64, 'base64')
