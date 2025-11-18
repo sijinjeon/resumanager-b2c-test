@@ -7,11 +7,13 @@ import questions from '@/data/questions.json'
 import personalities from '@/data/personalities.json'
 import type { Answer, PersonalityScores, PersonalityType, Personality } from '@/lib/types'
 import { generatePDF, formatDate } from '@/lib/pdf/generator'
+import { generatePDFBase64 } from '@/lib/pdf/generator-with-base64'
 
 export default function TestResultPage() {
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [downloading, setDownloading] = useState(false)
+  const [sending, setSending] = useState(false)
   const [answers, setAnswers] = useState<Answer[]>([])
   const [scores, setScores] = useState<PersonalityScores | null>(null)
   const [finalWhy, setFinalWhy] = useState<PersonalityType | null>(null)
@@ -138,6 +140,51 @@ export default function TestResultPage() {
       alert('PDF 생성 중 오류가 발생했습니다. 다시 시도해주세요.')
     } finally {
       setDownloading(false)
+    }
+  }
+
+  const handleSendEmail = async () => {
+    if (!finalWhy || !finalHow || !user) return
+    
+    setSending(true)
+    try {
+      // PDF Base64 생성
+      const pdfBase64 = await generatePDFBase64({
+        userName: user.user_metadata?.name || user.email || '사용자',
+        date: formatDate(new Date()),
+        whyType: finalWhy,
+        howType: finalHow,
+        whyPersonality: personalities[finalWhy] as Personality,
+        howPersonality: personalities[finalHow] as Personality
+      })
+
+      // 이메일 전송 API 호출
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: user.email,
+          userName: user.user_metadata?.name || user.email,
+          pdfBase64,
+          whyName: personalities[finalWhy].name,
+          howName: personalities[finalHow].name,
+        }),
+      })
+
+      const result = await response.json()
+
+      if (!response.ok) {
+        throw new Error(result.error || '이메일 전송 실패')
+      }
+
+      alert(`${user.email}로 진단 결과를 전송했습니다! 📧\n\n메일함을 확인해주세요.`)
+    } catch (error: any) {
+      console.error('이메일 전송 오류:', error)
+      alert(`이메일 전송에 실패했습니다.\n${error.message}\n\n관리자에게 문의해주세요.`)
+    } finally {
+      setSending(false)
     }
   }
 
@@ -272,9 +319,17 @@ export default function TestResultPage() {
           </button>
           <button 
             className="btn btn-outline btn-lg flex-1"
-            onClick={() => alert('이메일 전송 기능은 곧 추가됩니다!')}
+            onClick={handleSendEmail}
+            disabled={sending}
           >
-            📧 이메일로 받기
+            {sending ? (
+              <>
+                <span className="loading loading-spinner"></span>
+                전송 중...
+              </>
+            ) : (
+              <>📧 이메일로 받기</>
+            )}
           </button>
         </div>
 
