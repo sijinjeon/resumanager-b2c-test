@@ -7,6 +7,28 @@ interface PDFTemplateProps {
   howPersonality: Personality
 }
 
+// HEX 색상을 RGBA로 변환하는 헬퍼 함수
+function hexToRgba(hex: string, opacity: number): string {
+  // #RGB 또는 #RRGGBB 형식 지원
+  const cleanHex = hex.replace('#', '')
+  
+  let r: number, g: number, b: number
+  
+  if (cleanHex.length === 3) {
+    // #RGB 형식
+    r = parseInt(cleanHex[0] + cleanHex[0], 16)
+    g = parseInt(cleanHex[1] + cleanHex[1], 16)
+    b = parseInt(cleanHex[2] + cleanHex[2], 16)
+  } else {
+    // #RRGGBB 형식
+    r = parseInt(cleanHex.slice(0, 2), 16)
+    g = parseInt(cleanHex.slice(2, 4), 16)
+    b = parseInt(cleanHex.slice(4, 6), 16)
+  }
+  
+  return `rgba(${r}, ${g}, ${b}, ${opacity})`
+}
+
 export default function PDFTemplate({ 
   userName, 
   date, 
@@ -17,12 +39,15 @@ export default function PDFTemplate({
     <div 
       id="pdf-content" 
       style={{
+        all: 'initial',
         width: '210mm',
         minHeight: '297mm',
-        background: 'white',
-        fontFamily: 'system-ui, -apple-system, sans-serif',
-        color: '#333',
+        background: '#ffffff',
+        fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, sans-serif',
+        color: '#333333',
         padding: 0,
+        margin: 0,
+        boxSizing: 'border-box',
       }}
     >
       {/* 페이지 1: 표지 */}
@@ -200,7 +225,7 @@ export default function PDFTemplate({
 
         {/* 성향 카드 */}
         <div style={{
-          background: whyPersonality.color + '15',
+          background: hexToRgba(whyPersonality.color, 0.08),
           border: `3px solid ${whyPersonality.color}`,
           borderRadius: '12px',
           padding: '30px',
@@ -263,7 +288,7 @@ export default function PDFTemplate({
               <span
                 key={idx}
                 style={{
-                  background: whyPersonality.color + '20',
+                  background: hexToRgba(whyPersonality.color, 0.12),
                   color: whyPersonality.color,
                   padding: '8px 16px',
                   borderRadius: '20px',
@@ -347,7 +372,7 @@ export default function PDFTemplate({
 
         {/* 성향 카드 */}
         <div style={{
-          background: howPersonality.color + '15',
+          background: hexToRgba(howPersonality.color, 0.08),
           border: `3px solid ${howPersonality.color}`,
           borderRadius: '12px',
           padding: '30px',
@@ -410,7 +435,7 @@ export default function PDFTemplate({
               <span
                 key={idx}
                 style={{
-                  background: howPersonality.color + '20',
+                  background: hexToRgba(howPersonality.color, 0.12),
                   color: howPersonality.color,
                   padding: '8px 16px',
                   borderRadius: '20px',
