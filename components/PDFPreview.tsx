@@ -13,6 +13,24 @@ export default function PDFPreview({
   whyPersonality, 
   howPersonality 
 }: PDFPreviewProps) {
+  // HEX 색상을 RGBA로 변환하는 헬퍼 함수
+  const hexToRgba = (hex: string, opacity: number): string => {
+    const cleanHex = hex.replace('#', '')
+    let r: number, g: number, b: number
+    
+    if (cleanHex.length === 3) {
+      r = parseInt(cleanHex[0] + cleanHex[0], 16)
+      g = parseInt(cleanHex[1] + cleanHex[1], 16)
+      b = parseInt(cleanHex[2] + cleanHex[2], 16)
+    } else {
+      r = parseInt(cleanHex.slice(0, 2), 16)
+      g = parseInt(cleanHex.slice(2, 4), 16)
+      b = parseInt(cleanHex.slice(4, 6), 16)
+    }
+    
+    return `rgba(${r}, ${g}, ${b}, ${opacity})`
+  }
+
   return (
     <div 
       id="pdf-preview" 
@@ -21,11 +39,12 @@ export default function PDFPreview({
         minHeight: '1123px', // A4 height in pixels (297mm)
         background: '#ffffff',
         padding: '60px 50px',
-        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif',
+        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", "Apple SD Gothic Neo", sans-serif',
         position: 'fixed',
         left: '-10000px',
         top: 0,
         boxSizing: 'border-box',
+        color: '#000000',
       }}
     >
       {/* 헤더 */}
@@ -70,7 +89,7 @@ export default function PDFPreview({
       }}>
         {/* Why 성향 */}
         <div style={{
-          background: `linear-gradient(135deg, ${whyPersonality.color}08 0%, ${whyPersonality.color}15 100%)`,
+          background: hexToRgba(whyPersonality.color, 0.08),
           border: `2px solid ${whyPersonality.color}`,
           borderRadius: '12px',
           padding: '25px',
@@ -81,7 +100,7 @@ export default function PDFPreview({
             gap: '15px',
             marginBottom: '15px',
             paddingBottom: '15px',
-            borderBottom: `2px solid ${whyPersonality.color}30`,
+            borderBottom: `2px solid ${hexToRgba(whyPersonality.color, 0.2)}`,
           }}>
             <div style={{ fontSize: '48px' }}>
               {whyPersonality.icon}
@@ -138,7 +157,7 @@ export default function PDFPreview({
                 <span
                   key={idx}
                   style={{
-                    background: `${whyPersonality.color}25`,
+                    background: hexToRgba(whyPersonality.color, 0.15),
                     color: whyPersonality.color,
                     padding: '4px 10px',
                     borderRadius: '12px',
@@ -194,7 +213,7 @@ export default function PDFPreview({
 
         {/* How 성향 */}
         <div style={{
-          background: `linear-gradient(135deg, ${howPersonality.color}08 0%, ${howPersonality.color}15 100%)`,
+          background: hexToRgba(howPersonality.color, 0.08),
           border: `2px solid ${howPersonality.color}`,
           borderRadius: '12px',
           padding: '25px',
@@ -205,7 +224,7 @@ export default function PDFPreview({
             gap: '15px',
             marginBottom: '15px',
             paddingBottom: '15px',
-            borderBottom: `2px solid ${howPersonality.color}30`,
+            borderBottom: `2px solid ${hexToRgba(howPersonality.color, 0.2)}`,
           }}>
             <div style={{ fontSize: '48px' }}>
               {howPersonality.icon}
@@ -262,7 +281,7 @@ export default function PDFPreview({
                 <span
                   key={idx}
                   style={{
-                    background: `${howPersonality.color}25`,
+                    background: hexToRgba(howPersonality.color, 0.15),
                     color: howPersonality.color,
                     padding: '4px 10px',
                     borderRadius: '12px',
