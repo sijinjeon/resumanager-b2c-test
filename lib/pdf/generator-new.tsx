@@ -1,3 +1,4 @@
+import React from 'react'
 import { pdf } from '@react-pdf/renderer'
 import type { PersonalityType, Personality } from '@/lib/types'
 import PDFDocument from '@/components/PDFDocument'

@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import questions from '@/data/questions.json'
 import personalities from '@/data/personalities.json'
 import type { Answer, PersonalityScores, PersonalityType, Personality } from '@/lib/types'
-import { generatePDF, generatePDFBase64, formatDate } from '@/lib/pdf/generator-new'
+import { generatePDF, generatePDFBase64, formatDate } from '@/lib/pdf/generator-new.tsx'
 
 export default function TestResultPage() {
   const [user, setUser] = useState<any>(null)
