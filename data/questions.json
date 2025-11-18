@@ -1,0 +1,203 @@
+[
+  {
+    "id": 1,
+    "questionA": "이미 검증되고 신뢰할 수 있는 방법으로 일을 진행하는 편이에요",
+    "questionB": "새롭고 혁신적인 방법을 시도하며 일을 진행하는 편이에요",
+    "typeA": "legacy",
+    "typeB": "novelty",
+    "category": "approach"
+  },
+  {
+    "id": 2,
+    "questionA": "안전하고 확실한 방법을 선택해서 위험을 최소화해요",
+    "questionB": "과감하게 도전하고 새로운 것을 시도하는 걸 즐겨요",
+    "typeA": "stability",
+    "typeB": "challenge",
+    "category": "risk"
+  },
+  {
+    "id": 3,
+    "questionA": "명확한 목표를 세우고 구체적인 성과를 만드는 게 중요해요",
+    "questionB": "일의 의미와 가치, 왜 하는지가 더 중요해요",
+    "typeA": "goal",
+    "typeB": "purpose",
+    "category": "motivation"
+  },
+  {
+    "id": 4,
+    "questionA": "충분한 데이터와 정보를 바탕으로 판단하는 편이에요",
+    "questionB": "직관과 통찰력으로 빠르게 판단하는 편이에요",
+    "typeA": "information",
+    "typeB": "insight",
+    "category": "decision"
+  },
+  {
+    "id": 5,
+    "questionA": "함께 일하는 사람들과의 관계를 가장 중요하게 생각해요",
+    "questionB": "주어진 상황과 조건에 맞춰 일하는 걸 중요하게 생각해요",
+    "typeA": "person",
+    "typeB": "situation",
+    "category": "focus"
+  },
+  {
+    "id": 6,
+    "questionA": "팀원들과 함께 협력하며 일하는 게 좋아요",
+    "questionB": "혼자서 집중해서 독립적으로 일하는 게 좋아요",
+    "typeA": "together",
+    "typeB": "mySelf",
+    "category": "workstyle"
+  },
+  {
+    "id": 7,
+    "questionA": "많은 사람들이 검증한 방법과 프로세스를 따라가요",
+    "questionB": "아직 시도되지 않은 새로운 방법을 탐색하고 실험해요",
+    "typeA": "legacy",
+    "typeB": "novelty",
+    "category": "approach"
+  },
+  {
+    "id": 8,
+    "questionA": "체계적으로 계획하고 철저히 준비한 후에 실행해요",
+    "questionB": "일단 빠르게 실행하고 부딪히며 배워가는 걸 선호해요",
+    "typeA": "stability",
+    "typeB": "challenge",
+    "category": "execution"
+  },
+  {
+    "id": 9,
+    "questionA": "눈에 보이는 구체적인 성과를 만들어내는 게 중요해요",
+    "questionB": "장기적으로 큰 영향력과 변화를 만드는 게 중요해요",
+    "typeA": "goal",
+    "typeB": "purpose",
+    "category": "outcome"
+  },
+  {
+    "id": 10,
+    "questionA": "객관적인 사실과 수치, 근거를 중요하게 생각해요",
+    "questionB": "숨겨진 의미와 본질을 파악하는 걸 중요하게 생각해요",
+    "typeA": "information",
+    "typeB": "insight",
+    "category": "analysis"
+  },
+  {
+    "id": 11,
+    "questionA": "사람들의 감정과 마음을 먼저 헤아리고 배려해요",
+    "questionB": "지금 상황에서 가장 효율적이고 적절한 방법을 찾아요",
+    "typeA": "person",
+    "typeB": "situation",
+    "category": "priority"
+  },
+  {
+    "id": 12,
+    "questionA": "중요한 결정은 동료들과 충분히 의논한 후에 내려요",
+    "questionB": "중요한 결정은 스스로 판단하고 책임지는 편이에요",
+    "typeA": "together",
+    "typeB": "mySelf",
+    "category": "decision"
+  },
+  {
+    "id": 13,
+    "questionA": "오랫동안 통용되어 온 전통적인 방식이 믿음직스러워요",
+    "questionB": "독창적이고 창의적인 새로운 방식이 더 매력적이에요",
+    "typeA": "legacy",
+    "typeB": "novelty",
+    "category": "preference"
+  },
+  {
+    "id": 14,
+    "questionA": "예측 가능하고 안정적인 환경에서 일하는 게 편해요",
+    "questionB": "변화가 많고 역동적인 환경에서 일하는 게 즐거워요",
+    "typeA": "stability",
+    "typeB": "challenge",
+    "category": "environment"
+  },
+  {
+    "id": 15,
+    "questionA": "숫자로 측정할 수 있는 명확한 목표 달성에 집중해요",
+    "questionB": "의미 있고 가치 있는 변화를 만들어내는 데 집중해요",
+    "typeA": "goal",
+    "typeB": "purpose",
+    "category": "focus"
+  },
+  {
+    "id": 16,
+    "questionA": "정보를 충분히 모으고 분석한 다음에 결정해요",
+    "questionB": "핵심을 빠르게 캐치하고 바로 결정하는 편이에요",
+    "typeA": "information",
+    "typeB": "insight",
+    "category": "speed"
+  },
+  {
+    "id": 17,
+    "questionA": "함께 일하는 사람들의 생각과 느낌을 소중히 여겨요",
+    "questionB": "프로젝트의 현실적인 상황과 조건을 우선적으로 고려해요",
+    "typeA": "person",
+    "typeB": "situation",
+    "category": "value"
+  },
+  {
+    "id": 18,
+    "questionA": "문제가 생기면 팀원들과 함께 머리를 맞대고 해결해요",
+    "questionB": "문제가 생기면 스스로의 힘으로 해결책을 찾아내요",
+    "typeA": "together",
+    "typeB": "mySelf",
+    "category": "problemsolving"
+  },
+  {
+    "id": 19,
+    "questionA": "이미 성공한 사례와 경험을 참고하는 게 도움이 돼요",
+    "questionB": "아직 없던 새로운 아이디어를 시도하는 게 재미있어요",
+    "typeA": "legacy",
+    "typeB": "novelty",
+    "category": "reference"
+  },
+  {
+    "id": 20,
+    "questionA": "위험 요소를 미리 파악하고 대비책을 마련해 둬요",
+    "questionB": "좋은 기회가 보이면 빠르게 행동으로 옮기는 편이에요",
+    "typeA": "stability",
+    "typeB": "challenge",
+    "category": "attitude"
+  },
+  {
+    "id": 21,
+    "questionA": "당장 눈앞의 명확한 성과와 결과를 만들어내요",
+    "questionB": "시간이 걸리더라도 장기적인 영향력을 남기고 싶어요",
+    "typeA": "goal",
+    "typeB": "purpose",
+    "category": "impact"
+  },
+  {
+    "id": 22,
+    "questionA": "논리적으로 따져보고 정확하게 분석하는 걸 좋아해요",
+    "questionB": "직감적으로 느껴지는 통찰을 신뢰하는 편이에요",
+    "typeA": "information",
+    "typeB": "insight",
+    "category": "thinking"
+  },
+  {
+    "id": 23,
+    "questionA": "사람을 중심에 두고 일의 방향을 결정해요",
+    "questionB": "현재 상황을 기준으로 일의 방향을 결정해요",
+    "typeA": "person",
+    "typeB": "situation",
+    "category": "direction"
+  },
+  {
+    "id": 24,
+    "questionA": "팀 전체의 시너지를 높이는 게 가장 중요해요",
+    "questionB": "내 전문성과 역량을 최대한 발휘하는 게 중요해요",
+    "typeA": "together",
+    "typeB": "mySelf",
+    "category": "strength"
+  },
+  {
+    "id": 25,
+    "questionA": "기존에 있던 좋은 것들을 더 발전시키고 개선해요",
+    "questionB": "전에 없던 완전히 새로운 것을 만들어내는 게 좋아요",
+    "typeA": "legacy",
+    "typeB": "novelty",
+    "category": "innovation"
+  }
+]
+
