@@ -16,7 +16,15 @@ const config: Config = {
   },
   plugins: [require('daisyui')],
   daisyui: {
-    themes: ['light'],
+    themes: [
+      {
+        light: {
+          ...require('daisyui/src/theming/themes')['light'],
+          'primary': '#eb6339',
+          'secondary': '#f59e0b',
+        },
+      },
+    ],
   },
 }
 export default config

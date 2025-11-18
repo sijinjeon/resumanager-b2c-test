@@ -202,9 +202,17 @@ export default function TestResultPage() {
   const howPersonality = personalities[finalHow] as Personality
 
   return (
-    <>
-      {/* 숨겨진 PDF 템플릿 (화면에 안 보임) */}
-      <div style={{ position: 'absolute', left: '-9999px', top: '0' }}>
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-50 p-4">
+      {/* 숨겨진 PDF 템플릿 (완전히 격리) */}
+      <div style={{ 
+        position: 'fixed', 
+        left: '-10000px', 
+        top: '-10000px',
+        width: '210mm',
+        height: '297mm',
+        overflow: 'hidden',
+        zIndex: -9999,
+      }}>
         <PDFTemplate
           userName={user?.user_metadata?.name || user?.email || '사용자'}
           date={formatDate(new Date())}
@@ -213,8 +221,7 @@ export default function TestResultPage() {
         />
       </div>
 
-      <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-50 p-4">
-        <div className="container mx-auto max-w-4xl py-8">
+      <div className="container mx-auto max-w-4xl py-8">
         {/* 완료 헤더 */}
         <div className="text-center mb-8">
           <div className="text-6xl mb-4">🎉</div>
@@ -361,7 +368,6 @@ export default function TestResultPage() {
         </div>
       </div>
     </div>
-    </>
   )
 }
 
