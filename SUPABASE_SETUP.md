@@ -71,6 +71,11 @@ CREATE POLICY "Users can insert own test results"
   ON public.test_results FOR INSERT
   WITH CHECK (auth.uid() = user_id);
 
+CREATE POLICY "Users can update own test results"
+  ON public.test_results FOR UPDATE
+  USING (auth.uid() = user_id)
+  WITH CHECK (auth.uid() = user_id);
+
 -- 회원가입 시 자동으로 프로필 생성하는 트리거
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS trigger AS $$

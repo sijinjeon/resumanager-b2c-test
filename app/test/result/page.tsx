@@ -57,6 +57,22 @@ export default function TestResultPage() {
       setFinalWhy(why)
       setFinalHow(how)
       
+      // Supabase에 결과 저장
+      try {
+        await supabase.from('test_results').upsert({
+          user_id: user.id,
+          answers: savedAnswers,
+          scores: calculatedScores,
+          final_why: why,
+          final_how: how,
+        }, {
+          onConflict: 'user_id'
+        })
+        console.log('테스트 결과가 Supabase에 저장되었습니다.')
+      } catch (error) {
+        console.error('Supabase 저장 오류:', error)
+      }
+      
       setLoading(false)
     }
 
