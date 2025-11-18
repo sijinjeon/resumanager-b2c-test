@@ -6,8 +6,7 @@ import { useRouter } from 'next/navigation'
 import questions from '@/data/questions.json'
 import personalities from '@/data/personalities.json'
 import type { Answer, PersonalityScores, PersonalityType, Personality } from '@/lib/types'
-import { downloadPDF, generatePDFBase64 } from '@/lib/pdf/download'
-import PDFPreview from '@/components/PDFPreview'
+// PDF import 제거 (브라우저 인쇄 기능 사용)
 
 export default function TestResultPage() {
   const [user, setUser] = useState<any>(null)
@@ -120,62 +119,23 @@ export default function TestResultPage() {
     }
   }
 
-  const handleDownloadPDF = async () => {
+  const handleDownloadPDF = () => {
     if (!finalWhy || !finalHow || !user) return
     
-    setDownloading(true)
-    try {
-      const userName = user.user_metadata?.name || user.email || '사용자'
-      const date = new Date().toISOString().split('T')[0]
-      const fileName = `강점진단_${userName}_${date}.pdf`
-      
-      await downloadPDF('pdf-preview', fileName)
-      
-      alert('PDF 다운로드가 완료되었습니다! 📄')
-    } catch (error) {
-      console.error('PDF 생성 오류:', error)
-      alert('PDF 생성 중 오류가 발생했습니다. 다시 시도해주세요.')
-    } finally {
-      setDownloading(false)
+    const userName = user.user_metadata?.name || user.email || '사용자'
+    const date = new Date().toISOString().split('T')[0]
+    
+    // 인쇄용 페이지 열기
+    const printUrl = `/test/result/print?name=${encodeURIComponent(userName)}&date=${date}&why=${finalWhy}&how=${finalHow}`
+    const printWindow = window.open(printUrl, '_blank', 'width=800,height=600')
+    
+    if (!printWindow) {
+      alert('팝업이 차단되었습니다.\n\n브라우저 설정에서 팝업을 허용해주세요.')
     }
   }
 
-  const handleSendEmail = async () => {
-    if (!finalWhy || !finalHow || !user) return
-    
-    setSending(true)
-    try {
-      // PDF Base64 생성
-      const pdfBase64 = await generatePDFBase64('pdf-preview')
-
-      // 이메일 전송 API 호출
-      const response = await fetch('/api/send-email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: user.email,
-          userName: user.user_metadata?.name || user.email,
-          pdfBase64,
-          whyName: personalities[finalWhy].name,
-          howName: personalities[finalHow].name,
-        }),
-      })
-
-      const result = await response.json()
-
-      if (!response.ok) {
-        throw new Error(result.error || '이메일 전송 실패')
-      }
-
-      alert(`${user.email}로 진단 결과를 전송했습니다! 📧\n\n메일함을 확인해주세요.`)
-    } catch (error: any) {
-      console.error('이메일 전송 오류:', error)
-      alert(`이메일 전송에 실패했습니다.\n${error.message}\n\n관리자에게 문의해주세요.`)
-    } finally {
-      setSending(false)
-    }
+  const handleSendEmail = () => {
+    alert('💡 이메일 전송 방법:\n\n1. [PDF로 다운로드] 클릭\n2. 인쇄 대화상자에서 "PDF로 저장"\n3. 저장된 PDF를 이메일에 첨부\n\n곧 자동 이메일 전송 기능을 추가하겠습니다!')
   }
 
   if (loading || !scores || !finalWhy || !finalHow) {
@@ -191,17 +151,8 @@ export default function TestResultPage() {
   const howPersonality = personalities[finalHow] as Personality
 
   return (
-    <>
-      {/* PDF 미리보기 (숨김) */}
-      <PDFPreview
-        userName={user?.user_metadata?.name || user?.email || '사용자'}
-        date={new Date().toISOString().split('T')[0]}
-        whyPersonality={whyPersonality}
-        howPersonality={howPersonality}
-      />
-
-      <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-50 p-4">
-        <div className="container mx-auto max-w-4xl py-8">
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-50 p-4">
+      <div className="container mx-auto max-w-4xl py-8">
         {/* 완료 헤더 */}
         <div className="text-center mb-8">
           <div className="text-6xl mb-4">🎉</div>
@@ -348,7 +299,6 @@ export default function TestResultPage() {
         </div>
       </div>
     </div>
-    </>
   )
 }
 

@@ -17,12 +17,29 @@ export default function PrintPage() {
   const whyPersonality = personalities[whyType] as Personality
   const howPersonality = personalities[howType] as Personality
 
+  const hexToRgba = (hex: string, opacity: number): string => {
+    const cleanHex = hex.replace('#', '')
+    let r: number, g: number, b: number
+    
+    if (cleanHex.length === 3) {
+      r = parseInt(cleanHex[0] + cleanHex[0], 16)
+      g = parseInt(cleanHex[1] + cleanHex[1], 16)
+      b = parseInt(cleanHex[2] + cleanHex[2], 16)
+    } else {
+      r = parseInt(cleanHex.slice( 0, 2), 16)
+      g = parseInt(cleanHex.slice(2, 4), 16)
+      b = parseInt(cleanHex.slice(4, 6), 16)
+    }
+    
+    return `rgba(${r}, ${g}, ${b}, ${opacity})`
+  }
+
   useEffect(() => {
     setLoading(false)
     // 페이지 로드 후 자동으로 인쇄 대화상자 열기
     setTimeout(() => {
       window.print()
-    }, 500)
+    }, 800)
   }, [])
 
   if (loading || !whyPersonality || !howPersonality) {
@@ -31,9 +48,10 @@ export default function PrintPage() {
         display: 'flex', 
         alignItems: 'center', 
         justifyContent: 'center', 
-        height: '100vh' 
+        height: '100vh',
+        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
       }}>
-        로딩 중...
+        PDF 생성 중...
       </div>
     )
   }
@@ -50,8 +68,14 @@ export default function PrintPage() {
             margin: 0;
             padding: 0;
           }
-          .page-break {
-            page-break-after: always;
+          .no-print {
+            display: none !important;
+          }
+        }
+        
+        @media screen {
+          .print-only {
+            display: none;
           }
         }
         
@@ -62,140 +86,339 @@ export default function PrintPage() {
         }
       `}</style>
 
-      {/* 페이지 1: 표지 */}
-      <div className="page-break" style={{
-        width: '210mm',
-        height: '297mm',
-        background: 'linear-gradient(135deg, #fff5f0 0%, #ffffff 50%, #fff5f0 100%)',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '60px',
-        fontFamily: 'system-ui, -apple-system, sans-serif',
+      {/* 화면용 안내 메시지 */}
+      <div className="no-print" style={{
+        position: 'fixed',
+        top: '20px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        background: '#eb6339',
+        color: 'white',
+        padding: '15px 30px',
+        borderRadius: '8px',
+        fontSize: '14px',
+        zIndex: 9999,
+        boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
       }}>
-        <div style={{ fontSize: '72px', marginBottom: '30px' }}>💼</div>
+        💡 인쇄 대화상자에서 <strong>"PDF로 저장"</strong>을 선택하세요!
+      </div>
+
+      {/* 1페이지 - 모든 내용 */}
+      <div style={{
+        width: '210mm',
+        minHeight: '297mm',
+        background: '#ffffff',
+        padding: '40px 30px',
+        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", "Apple SD Gothic Neo", sans-serif',
+      }}>
+        <div style={{ fontSize: '48px', marginBottom: '15px' }}>💼</div>
         
         <h1 style={{
-          fontSize: '48px',
+          fontSize: '32px',
           fontWeight: 'bold',
           color: '#eb6339',
-          marginBottom: '15px',
+          marginBottom: '6px',
           textAlign: 'center',
         }}>
           커리어 강점 진단 결과
         </h1>
         
-        <h2 style={{
-          fontSize: '24px',
-          color: '#666666',
-          marginBottom: '50px',
+        <p style={{
+          fontSize: '12px',
+          color: '#999999',
+          marginBottom: '15px',
           textAlign: 'center',
-          fontWeight: 'normal',
         }}>
           Career Strength Report
-        </h2>
+        </p>
 
         <div style={{
-          width: '200px',
+          width: '80px',
           height: '2px',
           background: '#eb6339',
-          marginBottom: '40px',
+          margin: '0 auto 15px',
         }} />
 
         <div style={{
           textAlign: 'center',
-          fontSize: '16px',
-          color: '#666666',
-          marginBottom: '50px',
-        }}>
-          <p style={{ marginBottom: '10px' }}>
-            <strong>이름:</strong> {userName}
-          </p>
-          <p>
-            <strong>진단일:</strong> {date}
-          </p>
-        </div>
-
-        <div style={{
-          background: '#ffffff',
-          borderRadius: '16px',
-          padding: '40px',
-          boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
-          maxWidth: '500px',
-          width: '100%',
-        }}>
-          <p style={{
-            textAlign: 'center',
-            fontSize: '14px',
-            color: '#999999',
-            marginBottom: '25px',
-          }}>
-            나의 커리어 성향
-          </p>
-          
-          <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-            <div style={{ fontSize: '48px', marginBottom: '10px' }}>
-              {whyPersonality.icon}
-            </div>
-            <h3 style={{
-              fontSize: '28px',
-              fontWeight: 'bold',
-              color: whyPersonality.color,
-              marginBottom: '5px',
-            }}>
-              {whyPersonality.name}
-            </h3>
-            <p style={{
-              fontSize: '14px',
-              color: '#999999',
-            }}>
-              {whyPersonality.nameEn}
-            </p>
-          </div>
-
-          <div style={{
-            textAlign: 'center',
-            fontSize: '24px',
-            color: '#cccccc',
-            margin: '15px 0',
-          }}>
-            +
-          </div>
-
-          <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: '48px', marginBottom: '10px' }}>
-              {howPersonality.icon}
-            </div>
-            <h3 style={{
-              fontSize: '28px',
-              fontWeight: 'bold',
-              color: howPersonality.color,
-              marginBottom: '5px',
-            }}>
-              {howPersonality.name}
-            </h3>
-            <p style={{
-              fontSize: '14px',
-              color: '#999999',
-            }}>
-              {howPersonality.nameEn}
-            </p>
-          </div>
-        </div>
-
-        <p style={{
-          marginTop: '60px',
           fontSize: '12px',
-          color: '#cccccc',
+          color: '#666666',
+          marginBottom: '30px',
+        }}>
+          <span style={{ marginRight: '15px' }}><strong>이름:</strong> {userName}</span>
+          <span><strong>진단일:</strong> {date}</span>
+        </div>
+
+        {/* 메인 컨텐츠 - 2단 레이아웃 */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
+          gap: '20px',
+          marginBottom: '20px',
+        }}>
+          {/* Why 성향 */}
+          <div style={{
+            background: hexToRgba(whyPersonality.color, 0.08),
+            border: `2px solid ${whyPersonality.color}`,
+            borderRadius: '10px',
+            padding: '20px',
+          }}>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              marginBottom: '12px',
+              paddingBottom: '12px',
+              borderBottom: `2px solid ${hexToRgba(whyPersonality.color, 0.2)}`,
+            }}>
+              <div style={{ fontSize: '40px' }}>
+                {whyPersonality.icon}
+              </div>
+              <div>
+                <div style={{
+                  fontSize: '10px',
+                  color: '#999999',
+                  marginBottom: '2px',
+                }}>
+                  나의 Why 성향
+                </div>
+                <h2 style={{
+                  fontSize: '20px',
+                  fontWeight: 'bold',
+                  color: whyPersonality.color,
+                  marginBottom: '2px',
+                }}>
+                  {whyPersonality.name}
+                </h2>
+                <p style={{
+                  fontSize: '10px',
+                  color: '#666666',
+                }}>
+                  {whyPersonality.nameEn}
+                </p>
+              </div>
+            </div>
+
+            <p style={{
+              fontSize: '11px',
+              lineHeight: '1.6',
+              color: '#444444',
+              marginBottom: '12px',
+            }}>
+              {whyPersonality.description}
+            </p>
+
+            <div style={{ marginBottom: '12px' }}>
+              <div style={{
+                fontSize: '11px',
+                fontWeight: 'bold',
+                color: '#333333',
+                marginBottom: '6px',
+              }}>
+                💡 대표 키워드
+              </div>
+              <div style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: '5px',
+              }}>
+                {whyPersonality.keywords.map((keyword, idx) => (
+                  <span
+                    key={idx}
+                    style={{
+                      background: hexToRgba(whyPersonality.color, 0.15),
+                      color: whyPersonality.color,
+                      padding: '3px 8px',
+                      borderRadius: '10px',
+                      fontSize: '10px',
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    {keyword}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <div style={{
+                fontSize: '11px',
+                fontWeight: 'bold',
+                color: '#333333',
+                marginBottom: '6px',
+              }}>
+                ⭐ 주요 강점
+              </div>
+              {whyPersonality.strengths.map((strength, idx) => (
+                <div
+                  key={idx}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    marginBottom: '5px',
+                  }}
+                >
+                  <span style={{
+                    color: whyPersonality.color,
+                    fontSize: '12px',
+                    marginRight: '5px',
+                    fontWeight: 'bold',
+                  }}>
+                    ✓
+                  </span>
+                  <p style={{
+                    fontSize: '10px',
+                    lineHeight: '1.5',
+                    color: '#555555',
+                  }}>
+                    {strength}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* How 성향 */}
+          <div style={{
+            background: hexToRgba(howPersonality.color, 0.08),
+            border: `2px solid ${howPersonality.color}`,
+            borderRadius: '10px',
+            padding: '20px',
+          }}>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              marginBottom: '12px',
+              paddingBottom: '12px',
+              borderBottom: `2px solid ${hexToRgba(howPersonality.color, 0.2)}`,
+            }}>
+              <div style={{ fontSize: '40px' }}>
+                {howPersonality.icon}
+              </div>
+              <div>
+                <div style={{
+                  fontSize: '10px',
+                  color: '#999999',
+                  marginBottom: '2px',
+                }}>
+                  나의 How 성향
+                </div>
+                <h2 style={{
+                  fontSize: '20px',
+                  fontWeight: 'bold',
+                  color: howPersonality.color,
+                  marginBottom: '2px',
+                }}>
+                  {howPersonality.name}
+                </h2>
+                <p style={{
+                  fontSize: '10px',
+                  color: '#666666',
+                }}>
+                  {howPersonality.nameEn}
+                </p>
+              </div>
+            </div>
+
+            <p style={{
+              fontSize: '11px',
+              lineHeight: '1.6',
+              color: '#444444',
+              marginBottom: '12px',
+            }}>
+              {howPersonality.description}
+            </p>
+
+            <div style={{ marginBottom: '12px' }}>
+              <div style={{
+                fontSize: '11px',
+                fontWeight: 'bold',
+                color: '#333333',
+                marginBottom: '6px',
+              }}>
+                💡 대표 키워드
+              </div>
+              <div style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: '5px',
+              }}>
+                {howPersonality.keywords.map((keyword, idx) => (
+                  <span
+                    key={idx}
+                    style={{
+                      background: hexToRgba(howPersonality.color, 0.15),
+                      color: howPersonality.color,
+                      padding: '3px 8px',
+                      borderRadius: '10px',
+                      fontSize: '10px',
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    {keyword}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <div style={{
+                fontSize: '11px',
+                fontWeight: 'bold',
+                color: '#333333',
+                marginBottom: '6px',
+              }}>
+                ⭐ 주요 강점
+              </div>
+              {howPersonality.strengths.map((strength, idx) => (
+                <div
+                  key={idx}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    marginBottom: '5px',
+                  }}
+                >
+                  <span style={{
+                    color: howPersonality.color,
+                    fontSize: '12px',
+                    marginRight: '5px',
+                    fontWeight: 'bold',
+                  }}>
+                    ✓
+                  </span>
+                  <p style={{
+                    fontSize: '10px',
+                    lineHeight: '1.5',
+                    color: '#555555',
+                  }}>
+                    {strength}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* 푸터 */}
+        <div style={{
+          marginTop: '20px',
+          paddingTop: '15px',
+          borderTop: '1px solid #eeeeee',
           textAlign: 'center',
         }}>
-          Powered by Career Strength Test
-        </p>
+          <p style={{
+            fontSize: '10px',
+            color: '#999999',
+          }}>
+            © 2025 Career Strength Test. All rights reserved.
+          </p>
+        </div>
       </div>
 
-      {/* 페이지 2: Why 성향 */}
-      <div className="page-break" style={{
+      {/* 아래 내용 모두 삭제 */}
+      <div style={{ display: 'none' }}>
         width: '210mm',
         minHeight: '297mm',
         padding: '50px',
