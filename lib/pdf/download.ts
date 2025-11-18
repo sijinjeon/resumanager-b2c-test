@@ -31,7 +31,7 @@ export async function downloadPDF(
       backgroundColor: '#ffffff',
       width: 794, // A4 width in pixels
       height: 1123, // A4 height in pixels
-      onclone: (clonedDoc) => {
+      onclone: (clonedDoc: Document) => {
         console.log('DOM 복제 완료')
         // 복제된 문서에서 모든 oklch 색상 제거
         const clonedElement = clonedDoc.getElementById(elementId)
