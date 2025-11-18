@@ -112,7 +112,10 @@ export default function TestPage() {
               <span>편안한 마음으로 직관적으로 답변해주세요. 정답은 없습니다!</span>
             </div>
 
-            <button className="btn btn-primary btn-lg px-12">
+            <button 
+              onClick={() => router.push('/test/start')}
+              className="btn btn-primary btn-lg px-12"
+            >
               테스트 시작하기 →
             </button>
             
