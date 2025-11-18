@@ -1,9 +1,18 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type CSSProperties } from 'react'
 import { useSearchParams } from 'next/navigation'
 import personalities from '@/data/personalities.json'
 import type { PersonalityType, Personality } from '@/lib/types'
+
+const PAGE_CONTAINER_STYLE: CSSProperties = {
+  width: '210mm',
+  minHeight: '297mm',
+  background: 'linear-gradient(to bottom, #fafafa 0%, #ffffff 100%)',
+  padding: '50px 40px',
+  fontFamily:
+    '-apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", "Apple SD Gothic Neo", sans-serif',
+}
 
 export default function PrintPage() {
   const searchParams = useSearchParams()
@@ -103,13 +112,7 @@ export default function PrintPage() {
       </div>
 
       {/* 1페이지 - 모든 내용 */}
-      <div style={{
-        width: '210mm',
-        minHeight: '297mm',
-        background: 'linear-gradient(to bottom, #fafafa 0%, #ffffff 100%)',
-        padding: '50px 40px',
-        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", "Apple SD Gothic Neo", sans-serif',
-      }}>
+      <div style={PAGE_CONTAINER_STYLE}>
         {/* 헤더 */}
         <div style={{
           textAlign: 'center',
