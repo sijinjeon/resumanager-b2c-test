@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import questions from '@/data/questions.json'
 import personalities from '@/data/personalities.json'
 import type { Answer, PersonalityScores, PersonalityType, Personality } from '@/lib/types'
-import { generatePDF, generatePDFBase64, formatDate } from '@/lib/pdf/generator-new.tsx'
+// PDF 관련 import 제거
 
 export default function TestResultPage() {
   const [user, setUser] = useState<any>(null)
@@ -119,72 +119,19 @@ export default function TestResultPage() {
     }
   }
 
-  const handleDownloadPDF = async () => {
+  const handleDownloadPDF = () => {
     if (!finalWhy || !finalHow || !user) return
     
-    setDownloading(true)
-    try {
-      await generatePDF({
-        userName: user.user_metadata?.name || user.email || '사용자',
-        date: formatDate(new Date()),
-        whyType: finalWhy,
-        howType: finalHow,
-        whyPersonality: personalities[finalWhy] as Personality,
-        howPersonality: personalities[finalHow] as Personality
-      })
-      
-      alert('PDF 다운로드가 완료되었습니다! 📄')
-    } catch (error) {
-      console.error('PDF 생성 오류:', error)
-      alert('PDF 생성 중 오류가 발생했습니다. 다시 시도해주세요.')
-    } finally {
-      setDownloading(false)
-    }
+    const userName = user.user_metadata?.name || user.email || '사용자'
+    const date = new Date().toISOString().split('T')[0]
+    
+    // 인쇄용 페이지 열기
+    const printUrl = `/test/result/print?name=${encodeURIComponent(userName)}&date=${date}&why=${finalWhy}&how=${finalHow}`
+    window.open(printUrl, '_blank')
   }
 
-  const handleSendEmail = async () => {
-    if (!finalWhy || !finalHow || !user) return
-    
-    setSending(true)
-    try {
-      // PDF Base64 생성
-      const pdfBase64 = await generatePDFBase64({
-        userName: user.user_metadata?.name || user.email || '사용자',
-        date: formatDate(new Date()),
-        whyType: finalWhy,
-        howType: finalHow,
-        whyPersonality: personalities[finalWhy] as Personality,
-        howPersonality: personalities[finalHow] as Personality
-      })
-
-      // 이메일 전송 API 호출
-      const response = await fetch('/api/send-email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: user.email,
-          userName: user.user_metadata?.name || user.email,
-          pdfBase64,
-          whyName: personalities[finalWhy].name,
-          howName: personalities[finalHow].name,
-        }),
-      })
-
-      const result = await response.json()
-
-      if (!response.ok) {
-        throw new Error(result.error || '이메일 전송 실패')
-      }
-
-      alert(`${user.email}로 진단 결과를 전송했습니다! 📧\n\n메일함을 확인해주세요.`)
-    } catch (error: any) {
-      console.error('이메일 전송 오류:', error)
-      alert(`이메일 전송에 실패했습니다.\n${error.message}\n\n관리자에게 문의해주세요.`)
-    } finally {
-      setSending(false)
-    }
+  const handleSendEmail = () => {
+    alert('이메일 전송 기능은 PDF 다운로드가 완전히 작동한 후에 활성화됩니다.\n\n현재는 [📄 PDF로 다운로드] 버튼을 사용해주세요!')
   }
 
   if (loading || !scores || !finalWhy || !finalHow) {
