@@ -44,7 +44,7 @@
     "questionA": "팀원들과 함께 협력하며 일하는 게 좋아요",
     "questionB": "혼자서 집중해서 독립적으로 일하는 게 좋아요",
     "typeA": "together",
-    "typeB": "mySelf",
+    "typeB": "myself",
     "category": "workstyle"
   },
   {
@@ -61,7 +61,7 @@
     "questionB": "일단 빠르게 실행하고 부딪히며 배워가는 걸 선호해요",
     "typeA": "stability",
     "typeB": "challenge",
-    "category": "execution"
+    "category": "risk"
   },
   {
     "id": 9,
@@ -69,7 +69,7 @@
     "questionB": "장기적으로 큰 영향력과 변화를 만드는 게 중요해요",
     "typeA": "goal",
     "typeB": "purpose",
-    "category": "outcome"
+    "category": "motivation"
   },
   {
     "id": 10,
@@ -77,7 +77,7 @@
     "questionB": "숨겨진 의미와 본질을 파악하는 걸 중요하게 생각해요",
     "typeA": "information",
     "typeB": "insight",
-    "category": "analysis"
+    "category": "decision"
   },
   {
     "id": 11,
@@ -85,15 +85,15 @@
     "questionB": "지금 상황에서 가장 효율적이고 적절한 방법을 찾아요",
     "typeA": "person",
     "typeB": "situation",
-    "category": "priority"
+    "category": "focus"
   },
   {
     "id": 12,
     "questionA": "중요한 결정은 동료들과 충분히 의논한 후에 내려요",
     "questionB": "중요한 결정은 스스로 판단하고 책임지는 편이에요",
     "typeA": "together",
-    "typeB": "mySelf",
-    "category": "decision"
+    "typeB": "myself",
+    "category": "workstyle"
   },
   {
     "id": 13,
@@ -101,7 +101,7 @@
     "questionB": "독창적이고 창의적인 새로운 방식이 더 매력적이에요",
     "typeA": "legacy",
     "typeB": "novelty",
-    "category": "preference"
+    "category": "approach"
   },
   {
     "id": 14,
@@ -109,7 +109,7 @@
     "questionB": "변화가 많고 역동적인 환경에서 일하는 게 즐거워요",
     "typeA": "stability",
     "typeB": "challenge",
-    "category": "environment"
+    "category": "risk"
   },
   {
     "id": 15,
@@ -117,7 +117,7 @@
     "questionB": "의미 있고 가치 있는 변화를 만들어내는 데 집중해요",
     "typeA": "goal",
     "typeB": "purpose",
-    "category": "focus"
+    "category": "motivation"
   },
   {
     "id": 16,
@@ -125,7 +125,7 @@
     "questionB": "핵심을 빠르게 캐치하고 바로 결정하는 편이에요",
     "typeA": "information",
     "typeB": "insight",
-    "category": "speed"
+    "category": "decision"
   },
   {
     "id": 17,
@@ -133,15 +133,15 @@
     "questionB": "프로젝트의 현실적인 상황과 조건을 우선적으로 고려해요",
     "typeA": "person",
     "typeB": "situation",
-    "category": "value"
+    "category": "focus"
   },
   {
     "id": 18,
     "questionA": "문제가 생기면 팀원들과 함께 머리를 맞대고 해결해요",
     "questionB": "문제가 생기면 스스로의 힘으로 해결책을 찾아내요",
     "typeA": "together",
-    "typeB": "mySelf",
-    "category": "problemsolving"
+    "typeB": "myself",
+    "category": "workstyle"
   },
   {
     "id": 19,
@@ -149,7 +149,7 @@
     "questionB": "아직 없던 새로운 아이디어를 시도하는 게 재미있어요",
     "typeA": "legacy",
     "typeB": "novelty",
-    "category": "reference"
+    "category": "approach"
   },
   {
     "id": 20,
@@ -157,7 +157,7 @@
     "questionB": "좋은 기회가 보이면 빠르게 행동으로 옮기는 편이에요",
     "typeA": "stability",
     "typeB": "challenge",
-    "category": "attitude"
+    "category": "risk"
   },
   {
     "id": 21,
@@ -165,7 +165,7 @@
     "questionB": "시간이 걸리더라도 장기적인 영향력을 남기고 싶어요",
     "typeA": "goal",
     "typeB": "purpose",
-    "category": "impact"
+    "category": "motivation"
   },
   {
     "id": 22,
@@ -173,7 +173,7 @@
     "questionB": "직감적으로 느껴지는 통찰을 신뢰하는 편이에요",
     "typeA": "information",
     "typeB": "insight",
-    "category": "thinking"
+    "category": "decision"
   },
   {
     "id": 23,
@@ -181,15 +181,15 @@
     "questionB": "현재 상황을 기준으로 일의 방향을 결정해요",
     "typeA": "person",
     "typeB": "situation",
-    "category": "direction"
+    "category": "focus"
   },
   {
     "id": 24,
     "questionA": "팀 전체의 시너지를 높이는 게 가장 중요해요",
     "questionB": "내 전문성과 역량을 최대한 발휘하는 게 중요해요",
     "typeA": "together",
-    "typeB": "mySelf",
-    "category": "strength"
+    "typeB": "myself",
+    "category": "workstyle"
   },
   {
     "id": 25,
@@ -197,7 +197,6 @@
     "questionB": "전에 없던 완전히 새로운 것을 만들어내는 게 좋아요",
     "typeA": "legacy",
     "typeB": "novelty",
-    "category": "innovation"
+    "category": "approach"
   }
 ]
-
