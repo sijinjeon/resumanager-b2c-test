@@ -6,9 +6,7 @@ import { useRouter } from 'next/navigation'
 import questions from '@/data/questions.json'
 import personalities from '@/data/personalities.json'
 import type { Answer, PersonalityScores, PersonalityType, Personality } from '@/lib/types'
-import { generatePDF, formatDate } from '@/lib/pdf/generator'
-import { generatePDFBase64 } from '@/lib/pdf/generator-with-base64'
-import PDFTemplate from '@/components/PDFTemplate'
+import { generatePDF, generatePDFBase64, formatDate } from '@/lib/pdf/generator-new'
 
 export default function TestResultPage() {
   const [user, setUser] = useState<any>(null)
@@ -203,24 +201,6 @@ export default function TestResultPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-50 p-4">
-      {/* 숨겨진 PDF 템플릿 (완전히 격리) */}
-      <div style={{ 
-        position: 'fixed', 
-        left: '-10000px', 
-        top: '-10000px',
-        width: '210mm',
-        height: '297mm',
-        overflow: 'hidden',
-        zIndex: -9999,
-      }}>
-        <PDFTemplate
-          userName={user?.user_metadata?.name || user?.email || '사용자'}
-          date={formatDate(new Date())}
-          whyPersonality={whyPersonality}
-          howPersonality={howPersonality}
-        />
-      </div>
-
       <div className="container mx-auto max-w-4xl py-8">
         {/* 완료 헤더 */}
         <div className="text-center mb-8">
