@@ -41,7 +41,7 @@ export async function downloadPDF(
           clonedElement.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
         }
       }
-    })
+    } as any)
 
     console.log('캔버스 생성 완료')
 
@@ -99,7 +99,7 @@ export async function generatePDFBase64(
       backgroundColor: '#ffffff',
       width: 794,
       height: 1123,
-    })
+    } as any)
 
     const imgData = canvas.toDataURL('image/png')
     
