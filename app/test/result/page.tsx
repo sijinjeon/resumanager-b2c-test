@@ -61,14 +61,22 @@ export default function TestResultPage() {
       // Supabase에 결과 저장
       try {
         // 먼저 기존 결과가 있는지 확인
-        const { data: existingResults } = await supabase
+        const { data: existingResults, error: selectError } = await supabase
           .from('test_results')
           .select('id')
           .eq('user_id', user.id)
 
+        if (selectError) {
+          console.error('기존 결과 조회 오류:', selectError)
+          setSaveError(`조회 실패: ${selectError.message}`)
+          setLoading(false)
+          return
+        }
+
+        let saveResult
         if (existingResults && existingResults.length > 0) {
           // 업데이트
-          await supabase
+          saveResult = await supabase
             .from('test_results')
             .update({
               answers: savedAnswers,
@@ -79,7 +87,7 @@ export default function TestResultPage() {
             .eq('user_id', user.id)
         } else {
           // 새로 삽입
-          await supabase
+          saveResult = await supabase
             .from('test_results')
             .insert({
               user_id: user.id,
@@ -90,10 +98,14 @@ export default function TestResultPage() {
             })
         }
 
-        console.log('테스트 결과가 Supabase에 저장되었습니다.')
+        if (saveResult.error) {
+          console.error('Supabase 저장 오류:', saveResult.error)
+          setSaveError(`저장 실패: ${saveResult.error.message} (코드: ${saveResult.error.code || 'N/A'})`)
+        } else {
+          console.log('✅ 테스트 결과가 Supabase에 저장되었습니다.')
+        }
       } catch (error: any) {
-        console.error('Supabase 저장 오류:', error)
-        // 디버깅을 위해 에러를 화면에 표시
+        console.error('예기치 않은 오류:', error)
         setSaveError(error.message || JSON.stringify(error))
       }
 
