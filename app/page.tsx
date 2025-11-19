@@ -10,8 +10,8 @@ export default function Home() {
       </div>
 
       {/* Header */}
-      <header className="fixed top-4 left-0 right-0 z-50 px-4 md:px-6">
-        <nav className="container mx-auto max-w-6xl glass rounded-2xl px-4 md:px-6 py-3 flex justify-between items-center">
+      <header className="fixed top-4 left-0 right-0 z-50 px-3 md:px-6">
+        <nav className="container mx-auto max-w-6xl glass rounded-2xl px-3 md:px-6 py-3 flex justify-between items-center">
           <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
             <div className="text-xl md:text-2xl animate-float">💼</div>
             <span className="text-lg md:text-xl font-bold text-slate-900 tracking-tight">레쥬매니저</span>
@@ -33,7 +33,7 @@ export default function Home() {
         </nav>
       </header>
 
-      <main className="relative z-10 container mx-auto px-4 md:px-6 pt-28 md:pt-32 pb-12 md:pb-20">
+      <main className="relative z-10 container mx-auto px-3 md:px-6 pt-28 md:pt-32 pb-12 md:pb-20">
         {/* Hero Section */}
         <div className="flex flex-col items-center justify-center min-h-[70vh] md:min-h-[80vh] text-center max-w-5xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-full bg-white/50 border border-slate-200/60 backdrop-blur-sm mb-6 md:mb-8 animate-fade-in-up">

@@ -10,22 +10,25 @@
   --background-end-rgb: 255, 255, 255;
 }
 
+html,
 body {
   font-family: 'Outfit', sans-serif;
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
+  background: linear-gradient(to bottom,
       transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+  overflow-x: hidden;
+  /* Prevent horizontal scroll */
+  width: 100%;
+  -webkit-text-size-adjust: 100%;
+  /* Prevent font scaling in landscape */
 }
 
 @layer utilities {
   .glass {
     @apply bg-white/70 backdrop-blur-lg border border-white/20 shadow-xl;
   }
-  
+
   .glass-card {
     @apply bg-white/60 backdrop-blur-md border border-white/30 shadow-lg hover:shadow-xl transition-all duration-300;
   }
@@ -41,6 +44,7 @@ body {
     opacity: 0;
     transform: translateY(20px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -51,18 +55,23 @@ body {
   0% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-10px);
   }
+
   100% {
     transform: translateY(0px);
   }
 }
 
 @keyframes pulse-glow {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 0 15px rgba(239, 107, 59, 0.2);
   }
+
   50% {
     box-shadow: 0 0 25px rgba(239, 107, 59, 0.4);
   }
@@ -91,4 +100,3 @@ body {
 .delay-300 {
   animation-delay: 300ms;
 }
-

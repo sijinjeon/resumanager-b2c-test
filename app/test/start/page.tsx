@@ -100,21 +100,21 @@ export default function TestStartPage() {
   const currentAnswer = getCurrentAnswer()
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-50 p-4">
-      <div className="container mx-auto max-w-4xl py-8">
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-50 p-3 md:p-4">
+      <div className="container mx-auto max-w-4xl py-4 md:py-8">
         {/* 진행률 */}
-        <div className="mb-8">
+        <div className="mb-6 md:mb-8">
           <div className="flex justify-between items-center mb-2">
-            <span className="text-sm font-semibold text-gray-600">
+            <span className="text-xs md:text-sm font-semibold text-gray-600">
               질문 {currentQuestion + 1} / {questions.length}
             </span>
-            <span className="text-sm font-semibold text-primary">
+            <span className="text-xs md:text-sm font-semibold text-primary">
               {Math.round(progress)}% 완료
             </span>
           </div>
-          <div className="w-full bg-gray-200 rounded-full h-3">
+          <div className="w-full bg-gray-200 rounded-full h-2 md:h-3">
             <div
-              className="bg-primary h-3 rounded-full transition-all duration-300"
+              className="bg-primary h-2 md:h-3 rounded-full transition-all duration-300"
               style={{ width: `${progress}%` }}
             />
           </div>
@@ -122,13 +122,13 @@ export default function TestStartPage() {
 
         {/* 질문 카드 */}
         <div className="card bg-white shadow-2xl">
-          <div className="card-body p-8 md:p-12">
+          <div className="card-body p-4 md:p-12">
             {/* 질문 내용 */}
             {/* 질문 내용 */}
             <div className="flex flex-col space-y-8">
 
               {/* Questions Container */}
-              <div className="flex flex-col md:flex-row gap-6 items-stretch">
+              <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-stretch">
                 {/* A 옵션 */}
                 <div className="flex-1 flex flex-col p-6 md:p-8 bg-white rounded-2xl border-2 border-slate-100 hover:border-[#ef6b3b]/50 transition-all group cursor-pointer shadow-sm hover:shadow-md" onClick={() => handleAnswer(1)}>
                   <div className="text-sm font-bold text-slate-400 group-hover:text-[#ef6b3b] mb-3 uppercase tracking-wide transition-colors">Option A</div>
@@ -162,8 +162,8 @@ export default function TestStartPage() {
                         <button
                           onClick={() => handleAnswer(value as AnswerValue)}
                           className={`w-12 h-12 md:w-16 md:h-16 rounded-full text-lg md:text-xl font-bold transition-all duration-300 shadow-sm hover:shadow-md flex items-center justify-center border-2 ${currentAnswer === value
-                              ? 'text-white scale-110 shadow-lg ring-4 ring-[#ef6b3b]/20 border-transparent'
-                              : 'text-slate-400 border-slate-200 hover:border-[#ef6b3b] hover:text-[#ef6b3b]'
+                            ? 'text-white scale-110 shadow-lg ring-4 ring-[#ef6b3b]/20 border-transparent'
+                            : 'text-slate-400 border-slate-200 hover:border-[#ef6b3b] hover:text-[#ef6b3b]'
                             }`}
                           style={{
                             backgroundColor: currentAnswer === value ? '#ef6b3b' : 'white',

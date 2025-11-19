@@ -6,6 +6,13 @@ export const metadata: Metadata = {
   description: '25개 질문으로 알아보는 나의 커리어 성향',
 }
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+}
+
 export default function RootLayout({
   children,
 }: {
