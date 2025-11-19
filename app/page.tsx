@@ -2,24 +2,30 @@ import Link from 'next/link'
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
-      {/* 헤더 - shadcn 스타일 */}
-      <header className="border-b border-slate-200 bg-white/80 backdrop-blur-sm sticky top-0 z-50">
-        <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <div className="text-2xl">💼</div>
-            <span className="text-xl font-bold text-slate-900">강점진단</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <Link 
-              href="/login" 
-              className="px-4 py-2 text-sm font-medium text-slate-700 hover:text-slate-900 transition-colors"
+    <div className="min-h-screen bg-slate-50 relative overflow-hidden selection:bg-[#ef6b3b] selection:text-white">
+      {/* Background Decoration */}
+      <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-[-10%] right-[-5%] w-[300px] md:w-[500px] h-[300px] md:h-[500px] rounded-full bg-[#ef6b3b]/10 blur-[60px] md:blur-[100px] animate-float" />
+        <div className="absolute bottom-[-10%] left-[-5%] w-[400px] md:w-[600px] h-[400px] md:h-[600px] rounded-full bg-blue-500/5 blur-[80px] md:blur-[120px] animate-float delay-200" />
+      </div>
+
+      {/* Header */}
+      <header className="fixed top-4 left-0 right-0 z-50 px-4 md:px-6">
+        <nav className="container mx-auto max-w-6xl glass rounded-2xl px-4 md:px-6 py-3 flex justify-between items-center">
+          <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+            <div className="text-xl md:text-2xl animate-float">💼</div>
+            <span className="text-lg md:text-xl font-bold text-slate-900 tracking-tight">레쥬매니저</span>
+          </Link>
+          <div className="flex items-center gap-2 md:gap-3">
+            <Link
+              href="/login"
+              className="px-3 md:px-4 py-2 text-xs md:text-sm font-medium text-slate-600 hover:text-[#ef6b3b] transition-colors"
             >
               로그인
             </Link>
-            <Link 
-              href="/signup" 
-              className="px-6 py-2 text-sm font-medium text-white bg-[#ef6b3b] hover:bg-[#ef6b3b]/90 rounded-lg transition-all shadow-sm hover:shadow"
+            <Link
+              href="/signup"
+              className="px-4 md:px-6 py-2 md:py-2.5 text-xs md:text-sm font-medium text-white bg-[#ef6b3b] hover:bg-[#ef6b3b]/90 rounded-xl transition-all shadow-lg shadow-[#ef6b3b]/20 hover:shadow-[#ef6b3b]/40 hover:-translate-y-0.5"
             >
               시작하기
             </Link>
@@ -27,114 +33,111 @@ export default function Home() {
         </nav>
       </header>
 
-      {/* 메인 히어로 섹션 - shadcn 스타일 */}
-      <main className="container mx-auto px-6">
-        <div className="flex flex-col items-center justify-center min-h-[85vh] text-center">
-          {/* 메인 타이틀 */}
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 text-slate-900 tracking-tight">
+      <main className="relative z-10 container mx-auto px-4 md:px-6 pt-28 md:pt-32 pb-12 md:pb-20">
+        {/* Hero Section */}
+        <div className="flex flex-col items-center justify-center min-h-[70vh] md:min-h-[80vh] text-center max-w-5xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-full bg-white/50 border border-slate-200/60 backdrop-blur-sm mb-6 md:mb-8 animate-fade-in-up">
+            <span className="flex h-1.5 w-1.5 md:h-2 md:w-2 rounded-full bg-[#ef6b3b] animate-pulse"></span>
+            <span className="text-xs md:text-sm font-medium text-slate-600">과학적인 커리어 성향 분석</span>
+          </div>
+
+          <h1 className="text-4xl md:text-8xl font-extrabold mb-6 md:mb-8 tracking-tight leading-tight animate-fade-in-up delay-100">
             나의 커리어 강점을
             <br />
-            <span className="text-[#ef6b3b]">발견하세요</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ef6b3b] to-[#ff8f6b]">
+              발견하세요
+            </span>
           </h1>
-          
-          {/* 서브 타이틀 */}
-          <p className="text-lg md:text-xl text-slate-600 mb-12 max-w-2xl leading-relaxed">
-            25개 질문으로 알아보는 나의 성향
-            <br />
-            무료 PDF 리포트로 받아보세요
+
+          <p className="text-base md:text-2xl text-slate-600 mb-8 md:mb-12 max-w-xl md:max-w-2xl leading-relaxed animate-fade-in-up delay-200 px-4">
+            25개 질문으로 알아보는 나의 숨겨진 잠재력.
+            <br className="hidden md:block" />
+            지금 바로 무료 리포트를 받아보세요.
           </p>
 
-          {/* CTA 버튼 - shadcn 스타일 */}
-          <Link 
-            href="/signup" 
-            className="inline-flex items-center gap-2 px-8 py-4 text-base font-semibold text-white bg-[#ef6b3b] hover:bg-[#ef6b3b]/90 rounded-lg transition-all shadow-lg hover:shadow-xl hover:scale-105 mb-16"
+          <Link
+            href="/login"
+            className="group relative inline-flex items-center gap-2 md:gap-3 px-8 md:px-10 py-4 md:py-5 text-base md:text-lg font-bold text-white bg-[#ef6b3b] rounded-2xl transition-all animate-pulse-glow hover:scale-105 animate-fade-in-up delay-300"
           >
-            무료로 시작하기
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            <span className="relative z-10">무료로 진단하기</span>
+            <svg className="w-4 h-4 md:w-5 md:h-5 relative z-10 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
+            <div className="absolute inset-0 rounded-2xl bg-white/20 blur-sm opacity-0 group-hover:opacity-100 transition-opacity" />
           </Link>
 
-          {/* 특징 카드 - shadcn 스타일 */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8 max-w-5xl">
-            <div className="bg-white border border-slate-200 rounded-xl p-8 hover:shadow-lg transition-all">
-              <div className="flex flex-col items-center text-center">
-                <div className="text-5xl mb-4">⏱️</div>
-                <h3 className="text-lg font-bold text-slate-900 mb-2">15분 소요</h3>
-                <p className="text-sm text-slate-600 leading-relaxed">
-                  간단하고 빠르게
-                  <br />
-                  나의 성향을 파악
-                </p>
-              </div>
-            </div>
+          {/* Features Section - Redesigned & Mobile Optimized */}
+          <div className="w-full max-w-4xl mx-auto mt-16 md:mt-24 animate-fade-in-up delay-300">
+            <div className="bg-white/80 backdrop-blur-xl border border-slate-200/60 shadow-2xl shadow-slate-200/50 rounded-3xl p-6 md:p-10 flex flex-col md:flex-row items-center justify-between divide-y md:divide-y-0 md:divide-x divide-slate-100">
 
-            <div className="bg-white border border-slate-200 rounded-xl p-8 hover:shadow-lg transition-all">
-              <div className="flex flex-col items-center text-center">
-                <div className="text-5xl mb-4">📊</div>
-                <h3 className="text-lg font-bold text-slate-900 mb-2">12가지 성향</h3>
-                <p className="text-sm text-slate-600 leading-relaxed">
-                  과학적으로 검증된
-                  <br />
-                  커리어 성향 분석
-                </p>
+              {/* Section 1: Question Count */}
+              <div className="flex-1 w-full flex flex-row md:flex-col items-center justify-between md:justify-center p-4 md:p-6 group hover:bg-slate-50/50 transition-colors rounded-2xl">
+                <div className="text-sm md:text-base text-slate-500 md:mb-2 font-semibold tracking-wide uppercase">질문 수</div>
+                <div className="flex items-center gap-2 md:gap-3">
+                  <span className="text-4xl md:text-6xl font-black bg-gradient-to-br from-[#ef6b3b] to-[#ff8f6b] bg-clip-text text-transparent filter drop-shadow-sm">25개</span>
+                  <div className="text-2xl md:text-3xl animate-bounce text-[#ef6b3b]">⚡</div>
+                </div>
               </div>
-            </div>
 
-            <div className="bg-white border border-slate-200 rounded-xl p-8 hover:shadow-lg transition-all">
-              <div className="flex flex-col items-center text-center">
-                <div className="text-5xl mb-4">📧</div>
-                <h3 className="text-lg font-bold text-slate-900 mb-2">무료 PDF</h3>
-                <p className="text-sm text-slate-600 leading-relaxed">
-                  이메일로 받는
-                  <br />
-                  맞춤형 진단 보고서
-                </p>
+              {/* Section 2: Time Required */}
+              <div className="flex-1 w-full flex flex-row md:flex-col items-center justify-between md:justify-center p-4 md:p-6 group hover:bg-slate-50/50 transition-colors rounded-2xl">
+                <div className="text-sm md:text-base text-slate-500 md:mb-2 font-semibold tracking-wide uppercase">소요 시간</div>
+                <div className="flex items-center gap-2 md:gap-3">
+                  <span className="text-4xl md:text-6xl font-black bg-gradient-to-br from-blue-500 to-cyan-400 bg-clip-text text-transparent filter drop-shadow-sm">5분</span>
+                  <div className="text-2xl md:text-3xl text-blue-500">⏱️</div>
+                </div>
               </div>
+
+              {/* Section 3: Analysis Types */}
+              <div className="flex-1 w-full flex flex-row md:flex-col items-center justify-between md:justify-center p-4 md:p-6 group hover:bg-slate-50/50 transition-colors rounded-2xl">
+                <div className="text-sm md:text-base text-slate-500 md:mb-2 font-semibold tracking-wide uppercase">분석 성향</div>
+                <div className="flex items-center gap-2 md:gap-3">
+                  <span className="text-4xl md:text-6xl font-black bg-gradient-to-br from-purple-500 to-pink-500 bg-clip-text text-transparent filter drop-shadow-sm">12가지</span>
+                  <div className="text-2xl md:text-3xl text-purple-500">✨</div>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
 
-        {/* 12가지 성향 미리보기 - shadcn 스타일 */}
-        <section className="py-20">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-slate-900">
-            12가지 커리어 성향
-          </h2>
-          <p className="text-center text-slate-600 mb-12 max-w-2xl mx-auto">
-            당신의 성향을 정확하게 분석합니다
-          </p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+        {/* 12 Types Grid */}
+        <section className="py-20 md:py-32">
+          <div className="text-center mb-10 md:mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold mb-4 md:mb-6 text-slate-900">
+              12가지 커리어 성향
+            </h2>
+            <p className="text-base md:text-xl text-slate-600 max-w-2xl mx-auto px-4">
+              당신은 어떤 유형인가요? 나만의 특별한 강점을 찾아보세요.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 max-w-5xl mx-auto">
             {[
-              { name: '기존', icon: '📚' },
-              { name: '새로움', icon: '✨' },
-              { name: '안정', icon: '🛡️' },
-              { name: '도전', icon: '🚀' },
-              { name: '목표', icon: '🎯' },
-              { name: '목적', icon: '💡' },
-              { name: '정보', icon: '📊' },
-              { name: '인사이트', icon: '🔍' },
-              { name: '사람', icon: '👥' },
-              { name: '상황', icon: '🎭' },
-              { name: '함께', icon: '🤝' },
-              { name: '내가', icon: '💪' },
+              { name: '기존', icon: '📚' }, { name: '새로움', icon: '✨' },
+              { name: '안정', icon: '🛡️' }, { name: '도전', icon: '🚀' },
+              { name: '목표', icon: '🎯' }, { name: '목적', icon: '💡' },
+              { name: '정보', icon: '📊' }, { name: '인사이트', icon: '🔍' },
+              { name: '사람', icon: '👥' }, { name: '상황', icon: '🎭' },
+              { name: '함께', icon: '🤝' }, { name: '내가', icon: '💪' },
             ].map((item, index) => (
-              <div 
-                key={index} 
-                className="bg-white border border-slate-200 rounded-lg p-6 text-center hover:border-[#ef6b3b]/50 hover:shadow-md transition-all"
+              <div
+                key={index}
+                className="group bg-white border border-slate-100 rounded-2xl p-6 md:p-8 text-center hover:border-[#ef6b3b]/30 hover:shadow-xl hover:shadow-[#ef6b3b]/5 transition-all duration-300 cursor-default"
               >
-                <div className="text-3xl mb-2">{item.icon}</div>
-                <div className="text-sm font-semibold text-slate-700">{item.name}</div>
+                <div className="text-3xl md:text-4xl mb-3 md:mb-4 transform transition-transform group-hover:scale-110 group-hover:rotate-3 duration-300">{item.icon}</div>
+                <div className="text-base md:text-lg font-bold text-slate-700 group-hover:text-[#ef6b3b] transition-colors">{item.name}</div>
               </div>
             ))}
           </div>
         </section>
       </main>
 
-      {/* 푸터 - shadcn 스타일 */}
-      <footer className="border-t border-slate-200 bg-slate-50 py-12 mt-20">
+      {/* Footer */}
+      <footer className="border-t border-slate-200 bg-white/50 backdrop-blur-sm py-8 md:py-12">
         <div className="container mx-auto px-6 text-center">
-          <p className="text-sm text-slate-500">
-            © 2025 강점진단 · Career Strength Test
+          <p className="text-sm md:text-base text-slate-500 font-medium">
+            © 2025 레쥬매니저 · Career Strength Test
           </p>
         </div>
       </footer>

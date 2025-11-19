@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: '강점진단 - 나의 커리어 강점을 발견하세요',
+  title: '레쥬매니저 - 나의 커리어 강점을 발견하세요',
   description: '25개 질문으로 알아보는 나의 커리어 성향',
 }
 

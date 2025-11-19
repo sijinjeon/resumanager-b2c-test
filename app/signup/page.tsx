@@ -52,7 +52,7 @@ export default function SignupPage() {
         <div className="text-center mb-8">
           <Link href="/" className="flex items-center justify-center gap-2 mb-6">
             <span className="text-3xl">💼</span>
-            <span className="text-2xl font-bold text-slate-900">강점진단</span>
+            <span className="text-2xl font-bold text-slate-900">레쥬매니저</span>
           </Link>
           <h2 className="text-2xl font-bold text-slate-900 mb-2">회원가입</h2>
           <p className="text-sm text-slate-600">나의 커리어 강점을 발견하세요</p>

@@ -13,12 +13,12 @@ export default function TestPage() {
   useEffect(() => {
     const checkUser = async () => {
       const { data: { user } } = await supabase.auth.getUser()
-      
+
       if (!user) {
         router.push('/login')
         return
       }
-      
+
       setUser(user)
       setLoading(false)
     }
@@ -45,7 +45,7 @@ export default function TestPage() {
         {/* 헤더 */}
         <div className="navbar bg-base-100 rounded-box shadow-lg mb-8">
           <div className="flex-1">
-            <span className="text-xl font-bold">💼 강점진단 테스트</span>
+            <span className="text-xl font-bold">💼 레쥬매니저 테스트</span>
           </div>
           <div className="flex-none gap-2">
             <div className="dropdown dropdown-end">
@@ -68,41 +68,40 @@ export default function TestPage() {
         {/* 테스트 시작 카드 */}
         <div className="card bg-white shadow-2xl">
           <div className="card-body items-center text-center">
-            <h2 className="card-title text-3xl mb-4">강점진단을 시작합니다</h2>
+            <h2 className="card-title text-3xl mb-4">레쥬매니저을 시작합니다</h2>
             <p className="text-lg text-gray-600 mb-8">
               25개의 질문을 통해 당신의 커리어 강점을 발견해보세요
             </p>
 
-            <div className="stats stats-vertical lg:stats-horizontal shadow mb-8">
-              <div className="stat">
-                <div className="stat-figure text-primary">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-8 h-8 stroke-current">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                  </svg>
+            <div className="w-full mb-8 bg-white/80 backdrop-blur-xl border border-slate-200/60 shadow-xl shadow-slate-200/40 rounded-3xl p-6 md:p-10 flex flex-col md:flex-row items-center justify-between divide-y md:divide-y-0 md:divide-x divide-slate-100">
+
+              {/* Section 1: Question Count */}
+              <div className="flex-1 w-full flex flex-row md:flex-col items-center justify-between md:justify-center p-4 md:p-6 group hover:bg-slate-50/50 transition-colors rounded-2xl">
+                <div className="text-sm md:text-base text-slate-500 md:mb-2 font-semibold tracking-wide uppercase">질문 수</div>
+                <div className="flex items-center gap-2 md:gap-3">
+                  <span className="text-4xl md:text-6xl font-black bg-gradient-to-br from-[#ef6b3b] to-[#ff8f6b] bg-clip-text text-transparent filter drop-shadow-sm">25개</span>
+                  <div className="text-2xl md:text-3xl animate-bounce text-[#ef6b3b]">⚡</div>
                 </div>
-                <div className="stat-title">질문 수</div>
-                <div className="stat-value text-primary">25개</div>
               </div>
 
-              <div className="stat">
-                <div className="stat-figure text-secondary">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-8 h-8 stroke-current">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
-                  </svg>
+              {/* Section 2: Time Required */}
+              <div className="flex-1 w-full flex flex-row md:flex-col items-center justify-between md:justify-center p-4 md:p-6 group hover:bg-slate-50/50 transition-colors rounded-2xl">
+                <div className="text-sm md:text-base text-slate-500 md:mb-2 font-semibold tracking-wide uppercase">소요 시간</div>
+                <div className="flex items-center gap-2 md:gap-3">
+                  <span className="text-4xl md:text-6xl font-black bg-gradient-to-br from-blue-500 to-cyan-400 bg-clip-text text-transparent filter drop-shadow-sm">5분</span>
+                  <div className="text-2xl md:text-3xl text-blue-500">⏱️</div>
                 </div>
-                <div className="stat-title">소요 시간</div>
-                <div className="stat-value text-secondary">15분</div>
               </div>
 
-              <div className="stat">
-                <div className="stat-figure text-accent">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-8 h-8 stroke-current">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
-                  </svg>
+              {/* Section 3: Analysis Types */}
+              <div className="flex-1 w-full flex flex-row md:flex-col items-center justify-between md:justify-center p-4 md:p-6 group hover:bg-slate-50/50 transition-colors rounded-2xl">
+                <div className="text-sm md:text-base text-slate-500 md:mb-2 font-semibold tracking-wide uppercase">분석 성향</div>
+                <div className="flex items-center gap-2 md:gap-3">
+                  <span className="text-4xl md:text-6xl font-black bg-gradient-to-br from-purple-500 to-pink-500 bg-clip-text text-transparent filter drop-shadow-sm">12가지</span>
+                  <div className="text-2xl md:text-3xl text-purple-500">✨</div>
                 </div>
-                <div className="stat-title">분석 성향</div>
-                <div className="stat-value text-accent">12가지</div>
               </div>
+
             </div>
 
             <div className="alert alert-info mb-8">
@@ -112,13 +111,13 @@ export default function TestPage() {
               <span>편안한 마음으로 직관적으로 답변해주세요. 정답은 없습니다!</span>
             </div>
 
-            <button 
+            <button
               onClick={() => router.push('/test/start')}
               className="btn btn-primary btn-lg px-12"
             >
               테스트 시작하기 →
             </button>
-            
+
             <p className="text-sm text-gray-500 mt-4">
               * 진단 중 언제든 나갔다가 다시 시작할 수 있습니다
             </p>

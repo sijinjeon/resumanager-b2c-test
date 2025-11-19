@@ -17,7 +17,7 @@ const PAGE_CONTAINER_STYLE: CSSProperties = {
 export default function PrintResultClient() {
   const searchParams = useSearchParams()
   const [loading, setLoading] = useState(true)
-  
+
   const userName = searchParams.get('name') || '사용자'
   const date = searchParams.get('date') || new Date().toISOString().split('T')[0]
   const whyType = searchParams.get('why') as PersonalityType
@@ -35,10 +35,10 @@ export default function PrintResultClient() {
 
   if (loading || !whyPersonality || !howPersonality) {
     return (
-      <div style={{ 
-        display: 'flex', 
-        alignItems: 'center', 
-        justifyContent: 'center', 
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
         height: '100vh',
         fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
       }}>
@@ -101,12 +101,12 @@ export default function PrintResultClient() {
           textAlign: 'center',
           marginBottom: '35px',
         }}>
-          <div style={{ 
-            fontSize: '56px', 
+          <div style={{
+            fontSize: '56px',
             marginBottom: '20px',
             filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.08))',
           }}>💼</div>
-          
+
           <h1 style={{
             fontSize: '36px',
             fontWeight: '700',
@@ -114,9 +114,9 @@ export default function PrintResultClient() {
             marginBottom: '8px',
             letterSpacing: '-0.02em',
           }}>
-            커리어 강점 진단 결과
+            커리어 레쥬매니저 결과
           </h1>
-          
+
           <p style={{
             fontSize: '13px',
             color: '#64748b',
@@ -176,7 +176,7 @@ export default function PrintResultClient() {
               paddingBottom: '16px',
               borderBottom: '1px solid #e2e8f0',
             }}>
-              <div style={{ 
+              <div style={{
                 fontSize: '48px',
                 filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.1))',
               }}>
@@ -330,7 +330,7 @@ export default function PrintResultClient() {
               paddingBottom: '16px',
               borderBottom: '1px solid #e2e8f0',
             }}>
-              <div style={{ 
+              <div style={{
                 fontSize: '48px',
                 filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.1))',
               }}>
@@ -480,7 +480,7 @@ export default function PrintResultClient() {
             color: '#94a3b8',
             fontWeight: '500',
           }}>
-            © 2025 Career Strength Test · 커리어 강점 진단
+            © 2025 Career Strength Test · 커리어 레쥬매니저
           </p>
         </div>
       </div>

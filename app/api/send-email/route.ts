@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
     const { data, error } = await resend.emails.send({
       from: 'Career Strength <noreply@yourdomain.com>',
       to: [email],
-      subject: `${userName}님의 강점진단 결과가 도착했습니다! 🎉`,
+      subject: `${userName}님의 레쥬매니저 결과가 도착했습니다! 🎉`,
       html: `
         <!DOCTYPE html>
         <html>
@@ -86,7 +86,7 @@ export async function POST(request: NextRequest) {
           </head>
           <body>
             <div class="header">
-              <h1>🎉 강점진단 결과</h1>
+              <h1>🎉 레쥬매니저 결과</h1>
               <p>${userName}님의 커리어 강점을 분석했습니다</p>
             </div>
             
