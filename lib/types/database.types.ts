@@ -37,6 +37,7 @@ export interface Database {
           id: string
           user_id: string
           answers: Json
+          scores: Json
           final_why: string
           final_how: string
           created_at: string
@@ -45,6 +46,7 @@ export interface Database {
           id?: string
           user_id: string
           answers: Json
+          scores: Json
           final_why: string
           final_how: string
           created_at?: string
@@ -53,6 +55,7 @@ export interface Database {
           id?: string
           user_id?: string
           answers?: Json
+          scores?: Json
           final_why?: string
           final_how?: string
           created_at?: string
