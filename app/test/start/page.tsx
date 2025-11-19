@@ -17,14 +17,14 @@ export default function TestStartPage() {
   useEffect(() => {
     const checkUser = async () => {
       const { data: { user } } = await supabase.auth.getUser()
-      
+
       if (!user) {
         router.push('/login')
         return
       }
-      
+
       setUser(user)
-      
+
       // 저장된 답변 불러오기 (localStorage에서)
       const saved = localStorage.getItem(`test_answers_${user.id}`)
       if (saved) {
@@ -36,7 +36,7 @@ export default function TestStartPage() {
           setCurrentQuestion(lastAnswered)
         }
       }
-      
+
       setLoading(false)
     }
 
@@ -124,50 +124,67 @@ export default function TestStartPage() {
         <div className="card bg-white shadow-2xl">
           <div className="card-body p-8 md:p-12">
             {/* 질문 내용 */}
-            <div className="space-y-8">
-              {/* A 옵션 */}
-              <div className="text-left p-6 bg-blue-50 rounded-lg border-2 border-blue-200">
-                <div className="text-sm font-bold text-blue-600 mb-2">A</div>
-                <p className="text-lg md:text-xl font-medium text-gray-800">
-                  {question.questionA}
-                </p>
+            {/* 질문 내용 */}
+            <div className="flex flex-col space-y-8">
+
+              {/* Questions Container */}
+              <div className="flex flex-col md:flex-row gap-6 items-stretch">
+                {/* A 옵션 */}
+                <div className="flex-1 flex flex-col p-6 md:p-8 bg-white rounded-2xl border-2 border-slate-100 hover:border-[#ef6b3b]/50 transition-all group cursor-pointer shadow-sm hover:shadow-md" onClick={() => handleAnswer(1)}>
+                  <div className="text-sm font-bold text-slate-400 group-hover:text-[#ef6b3b] mb-3 uppercase tracking-wide transition-colors">Option A</div>
+                  <p className="text-lg md:text-xl font-medium text-slate-800 leading-relaxed flex-grow">
+                    {question.questionA}
+                  </p>
+                </div>
+
+                {/* B 옵션 */}
+                <div className="flex-1 flex flex-col p-6 md:p-8 bg-white rounded-2xl border-2 border-slate-100 hover:border-[#ef6b3b]/50 transition-all group cursor-pointer shadow-sm hover:shadow-md" onClick={() => handleAnswer(5)}>
+                  <div className="text-sm font-bold text-slate-400 group-hover:text-[#ef6b3b] mb-3 uppercase tracking-wide transition-colors">Option B</div>
+                  <p className="text-lg md:text-xl font-medium text-slate-800 leading-relaxed flex-grow">
+                    {question.questionB}
+                  </p>
+                </div>
               </div>
 
               {/* 5단계 척도 */}
-              <div className="flex flex-col items-center space-y-4 py-6">
-                <div className="flex items-center justify-between w-full max-w-2xl">
-                  {[1, 2, 3, 4, 5].map((value) => (
-                    <button
-                      key={value}
-                      onClick={() => handleAnswer(value as AnswerValue)}
-                      className={`btn btn-circle transition-all duration-200 ${
-                        currentAnswer === value
-                          ? 'btn-primary btn-lg scale-110'
-                          : value === 1 || value === 5
-                          ? 'btn-outline btn-lg'
-                          : 'btn-outline btn-md'
-                      }`}
-                    >
-                      {value}
-                    </button>
-                  ))}
+              <div className="flex flex-col items-center space-y-6 pt-4">
+                <div className="flex items-center justify-between w-full max-w-3xl px-4 relative">
+                  {/* Gradient Line Background */}
+                  <div className="absolute left-4 right-4 top-1/2 h-1 bg-gradient-to-r from-slate-200 via-[#ef6b3b]/50 to-[#ef6b3b] -z-10 rounded-full opacity-30"></div>
+
+                  {[1, 2, 3, 4, 5].map((value) => {
+                    // Calculate opacity/intensity based on value (1 to 5)
+                    const intensity = 0.2 + (value * 0.16); // 0.36 to 1.0
+                    const activeColor = `rgba(239, 107, 59, ${intensity})`; // #ef6b3b is 239, 107, 59
+
+                    return (
+                      <div key={value} className="flex flex-col items-center gap-2 bg-white p-1 rounded-full">
+                        <button
+                          onClick={() => handleAnswer(value as AnswerValue)}
+                          className={`w-12 h-12 md:w-16 md:h-16 rounded-full text-lg md:text-xl font-bold transition-all duration-300 shadow-sm hover:shadow-md flex items-center justify-center border-2 ${currentAnswer === value
+                              ? 'text-white scale-110 shadow-lg ring-4 ring-[#ef6b3b]/20 border-transparent'
+                              : 'text-slate-400 border-slate-200 hover:border-[#ef6b3b] hover:text-[#ef6b3b]'
+                            }`}
+                          style={{
+                            backgroundColor: currentAnswer === value ? '#ef6b3b' : 'white',
+                            // For gradient effect on inactive buttons if desired, or just keep clean
+                          }}
+                        >
+                          {value}
+                        </button>
+                      </div>
+                    );
+                  })}
                 </div>
-                
+
                 {/* 라벨 */}
-                <div className="flex justify-between w-full max-w-2xl text-xs md:text-sm text-gray-500">
-                  <span>A에 매우 가까움</span>
-                  <span>중립</span>
-                  <span>B에 매우 가까움</span>
+                <div className="flex justify-between w-full max-w-3xl px-2 text-xs md:text-sm font-medium text-slate-400">
+                  <span className="text-slate-500">A에 매우 가까움</span>
+                  <span className="text-slate-400">중립</span>
+                  <span className="text-[#ef6b3b]">B에 매우 가까움</span>
                 </div>
               </div>
 
-              {/* B 옵션 */}
-              <div className="text-left p-6 bg-purple-50 rounded-lg border-2 border-purple-200">
-                <div className="text-sm font-bold text-purple-600 mb-2">B</div>
-                <p className="text-lg md:text-xl font-medium text-gray-800">
-                  {question.questionB}
-                </p>
-              </div>
             </div>
 
             {/* 네비게이션 버튼 */}
