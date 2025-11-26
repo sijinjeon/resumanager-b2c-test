@@ -62,7 +62,18 @@ resumanager-b2c-test/
 - **8주차**: 이메일 전송
 - **9주차**: 최종 마무리
 
-## 📚 참고 자료
+## 📚 문서
+
+프로젝트의 상세 문서는 [docs](./docs) 폴더에서 확인하세요:
+
+- **[프로젝트 완료 가이드](./docs/PROJECT_COMPLETE.md)** - 전체 기능 및 구조
+- **[Supabase 설정](./docs/SUPABASE_SETUP.md)** - 데이터베이스 설정 방법
+- **[Resend 설정](./docs/RESEND_SETUP.md)** - 이메일 서비스 설정
+- **[Vercel 배포](./docs/VERCEL_DEPLOY.md)** - 배포 가이드
+- **[질문 편집 가이드](./docs/QUESTIONS_EDIT_GUIDE.md)** - 진단 질문 수정 방법
+- **[PDF 디자인 가이드](./docs/PDF_DESIGN_GUIDE.md)** - PDF 보고서 디자인
+
+### 외부 참고 자료
 
 - [Next.js 문서](https://nextjs.org/docs)
 - [Tailwind CSS](https://tailwindcss.com)
