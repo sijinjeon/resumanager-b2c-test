@@ -85,12 +85,15 @@ resumanager-b2c-test/
 
 프로젝트의 상세 문서는 [docs](./docs) 폴더에서 확인하세요:
 
-- **[프로젝트 완료 가이드](./docs/PROJECT_COMPLETE.md)** - 전체 기능 및 구조
+- **[프로젝트 구조 가이드](./docs/PROJECT_STRUCTURE.md)** - 전체 구조 및 파일 설명
+- **[프로젝트 완료 가이드](./docs/PROJECT_COMPLETE.md)** - 전체 기능 및 구현 내용
 - **[Supabase 설정](./docs/SUPABASE_SETUP.md)** - 데이터베이스 설정 방법
 - **[Resend 설정](./docs/RESEND_SETUP.md)** - 이메일 서비스 설정
 - **[Vercel 배포](./docs/VERCEL_DEPLOY.md)** - 배포 가이드
 - **[질문 편집 가이드](./docs/QUESTIONS_EDIT_GUIDE.md)** - 진단 질문 수정 방법
 - **[PDF 디자인 가이드](./docs/PDF_DESIGN_GUIDE.md)** - PDF 보고서 디자인
+
+> 💡 **처음 시작하시나요?** [docs/README.md](./docs/README.md)에서 문서 읽는 순서를 확인하세요!
 
 ### 외부 참고 자료
 

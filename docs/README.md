@@ -6,6 +6,7 @@
 
 ### 프로젝트 개요
 - **[PROJECT_COMPLETE.md](./PROJECT_COMPLETE.md)** - 프로젝트 전체 완료 가이드 및 기능 명세
+- **[PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md)** - 프로젝트 구조 상세 가이드
 
 ### 설정 가이드
 - **[SUPABASE_SETUP.md](./SUPABASE_SETUP.md)** - Supabase 데이터베이스 설정 방법
@@ -22,9 +23,10 @@
 ### 시작하기
 새로운 개발자가 프로젝트를 시작할 때 읽어야 할 문서:
 1. 메인 [README.md](../README.md) - 프로젝트 개요 및 빠른 시작
-2. [PROJECT_COMPLETE.md](./PROJECT_COMPLETE.md) - 전체 기능 및 구조 이해
-3. [SUPABASE_SETUP.md](./SUPABASE_SETUP.md) - 데이터베이스 설정
-4. [RESEND_SETUP.md](./RESEND_SETUP.md) - 이메일 서비스 설정
+2. [PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md) - 프로젝트 구조 상세 이해
+3. [PROJECT_COMPLETE.md](./PROJECT_COMPLETE.md) - 전체 기능 및 구현 내용
+4. [SUPABASE_SETUP.md](./SUPABASE_SETUP.md) - 데이터베이스 설정
+5. [RESEND_SETUP.md](./RESEND_SETUP.md) - 이메일 서비스 설정
 
 ### 배포하기
 프로젝트를 배포할 때 참고할 문서:
