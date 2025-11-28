@@ -40,6 +40,7 @@ export interface Database {
           scores: Json
           final_why: string
           final_how: string
+          top_personality: string | null
           created_at: string
         }
         Insert: {
@@ -49,6 +50,7 @@ export interface Database {
           scores: Json
           final_why: string
           final_how: string
+          top_personality?: string | null
           created_at?: string
         }
         Update: {
@@ -58,10 +60,10 @@ export interface Database {
           scores?: Json
           final_why?: string
           final_how?: string
+          top_personality?: string | null
           created_at?: string
         }
       }
     }
   }
 }
-
