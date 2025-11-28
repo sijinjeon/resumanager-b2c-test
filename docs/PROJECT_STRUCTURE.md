@@ -238,3 +238,8 @@ resumanager-b2c-test/
 2. [SUPABASE_SETUP.md](./SUPABASE_SETUP.md)로 데이터베이스 설정
 3. 개발 시작! 🚀
 
+
+
+
+
+
