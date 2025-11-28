@@ -24,6 +24,13 @@ export default function PrintResultClient() {
 
   const personality = personalities[personalityType] as Personality
 
+  // 텍스트에서 "님은", "님도"를 개인화된 이름으로 대체
+  const personalizeText = (text: string): string => {
+    return text
+      .replace(/님은/g, `${userName}님은`)
+      .replace(/님도/g, `${userName}님도`)
+  }
+
   useEffect(() => {
     setLoading(false)
     setTimeout(() => {
@@ -238,7 +245,7 @@ export default function PrintResultClient() {
               textAlign: 'center',
               lineHeight: '1.6',
             }}>
-              {personality.why.sentence}
+              {personalizeText(personality.why.sentence)}
             </p>
           </div>
 
@@ -315,7 +322,7 @@ export default function PrintResultClient() {
                 color: '#334155',
                 lineHeight: '1.6',
               }}>
-                {personality.building.connection}
+                {personalizeText(personality.building.connection)}
               </p>
             </div>
           </div>

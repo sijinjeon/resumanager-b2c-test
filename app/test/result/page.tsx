@@ -150,10 +150,10 @@ export default function TestResultPage() {
   const handleDownloadPDF = () => {
     if (!topPersonality || !user) return
 
-    const userName = user.user_metadata?.name || user.email || '사용자'
+    const userEmailId = getEmailId(user.email)
     const date = new Date().toISOString().split('T')[0]
 
-    const printUrl = `/test/result/print?name=${encodeURIComponent(userName)}&date=${date}&type=${topPersonality}`
+    const printUrl = `/test/result/print?name=${encodeURIComponent(userEmailId)}&date=${date}&type=${topPersonality}`
     const printWindow = window.open(printUrl, '_blank', 'width=800,height=600')
 
     if (!printWindow) {
@@ -163,6 +163,19 @@ export default function TestResultPage() {
 
   const handleSendEmail = () => {
     alert('💡 이메일 전송 방법:\n\n1. [PDF로 다운로드] 클릭\n2. 인쇄 대화상자에서 "PDF로 저장"\n3. 저장된 PDF를 이메일에 첨부')
+  }
+
+  // 이메일에서 ID 추출 (@ 앞 부분)
+  const getEmailId = (email: string | undefined): string => {
+    if (!email) return ''
+    return email.split('@')[0]
+  }
+
+  // 텍스트에서 "님은", "님도"를 개인화된 이름으로 대체
+  const personalizeText = (text: string, emailId: string): string => {
+    return text
+      .replace(/님은/g, `${emailId}님은`)
+      .replace(/님도/g, `${emailId}님도`)
   }
 
   if (loading || !scores || !topPersonality) {
@@ -175,6 +188,7 @@ export default function TestResultPage() {
   }
 
   const personality = personalities[topPersonality] as Personality
+  const emailId = getEmailId(user?.email)
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-50 p-4">
@@ -246,7 +260,7 @@ export default function TestResultPage() {
             {/* Why 설명 문장 */}
             <div className="bg-slate-50 rounded-2xl p-6 mb-8">
               <p className="text-xl md:text-2xl font-medium text-slate-800 text-center leading-relaxed">
-                {personality.why.sentence}
+                {personalizeText(personality.why.sentence, emailId)}
               </p>
             </div>
 
@@ -275,7 +289,7 @@ export default function TestResultPage() {
                 style={{ backgroundColor: personality.color + '10', borderColor: personality.color }}
               >
                 <p className="text-slate-700 font-medium">
-                  {personality.building.connection}
+                  {personalizeText(personality.building.connection, emailId)}
                 </p>
               </div>
             </div>
