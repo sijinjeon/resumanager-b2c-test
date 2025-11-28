@@ -1,12 +1,14 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import questions from '@/data/questions.json'
 import personalities from '@/data/personalities.json'
 import type { Answer, PersonalityScores, PersonalityType, Personality } from '@/lib/types'
+import html2canvas from 'html2canvas'
+import { jsPDF } from 'jspdf'
 
 export default function TestResultPage() {
   const [user, setUser] = useState<any>(null)
@@ -19,6 +21,7 @@ export default function TestResultPage() {
   const [topPersonality, setTopPersonality] = useState<PersonalityType | null>(null)
   const router = useRouter()
   const supabase = createClient()
+  const printRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const loadResults = async () => {
@@ -148,22 +151,57 @@ export default function TestResultPage() {
     return entries[0][0]
   }
 
-  const handleDownloadPDF = () => {
-    if (!topPersonality || !user) return
+  const handleDownloadPDF = async () => {
+    if (!printRef.current || !topPersonality || !user) return
 
-    const userEmailId = getEmailId(user.email)
-    const date = new Date().toISOString().split('T')[0]
+    setDownloading(true)
+    try {
+      const element = printRef.current
+      const canvas = await html2canvas(element, {
+        scale: 2,
+        useCORS: true,
+        logging: false,
+        backgroundColor: '#ffffff'
+      })
 
-    const printUrl = `/test/result/print?name=${encodeURIComponent(userEmailId)}&date=${date}&type=${topPersonality}`
-    const printWindow = window.open(printUrl, '_blank', 'width=800,height=600')
+      const imgData = canvas.toDataURL('image/png')
+      const pdf = new jsPDF('p', 'mm', 'a4')
+      const pdfWidth = pdf.internal.pageSize.getWidth()
+      const pdfHeight = pdf.internal.pageSize.getHeight()
+      const imgWidth = canvas.width
+      const imgHeight = canvas.height
+      const ratio = pdfWidth / imgWidth
+      const contentHeight = imgHeight * ratio
 
-    if (!printWindow) {
-      alert('팝업이 차단되었습니다.\n\n브라우저 설정에서 팝업을 허용해주세요.')
+      let heightLeft = contentHeight
+      let position = 0
+
+      pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, contentHeight)
+      heightLeft -= pdfHeight
+
+      while (heightLeft > 0) {
+        position -= pdfHeight // Move image up by one page height
+        pdf.addPage()
+        pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, contentHeight)
+        heightLeft -= pdfHeight
+      }
+
+      const userEmailId = getEmailId(user.email)
+      const date = new Date().toISOString().split('T')[0]
+      // UTF-8 filename handling is automatic in modern browsers, but we ensure safe characters
+      const filename = `${userEmailId}_strength_report_${date}.pdf`
+
+      pdf.save(filename)
+    } catch (error) {
+      console.error('PDF generation failed:', error)
+      alert('PDF 생성에 실패했습니다.')
+    } finally {
+      setDownloading(false)
     }
   }
 
   const handleSendEmail = () => {
-    alert('💡 이메일 전송 방법:\n\n1. [PDF로 다운로드] 클릭\n2. 인쇄 대화상자에서 "PDF로 저장"\n3. 저장된 PDF를 이메일에 첨부')
+    alert('💡 이메일 전송 방법:\n\n1. [PDF로 다운로드] 클릭\n2. 저장된 PDF를 이메일에 첨부')
   }
 
   // 이메일에서 ID 추출 (@ 앞 부분)
@@ -219,9 +257,9 @@ export default function TestResultPage() {
         )}
 
         {/* Why 리포트 카드 */}
-        <div className="card bg-white shadow-2xl overflow-hidden">
+        <div ref={printRef} className="card bg-white shadow-2xl overflow-hidden">
           {/* 상단 헤더 */}
-          <div 
+          <div
             className="p-6 md:p-8 text-white"
             style={{ backgroundColor: personality.color }}
           >
@@ -282,22 +320,24 @@ export default function TestResultPage() {
                 <span style={{ color: personality.color }}>●</span>
                 나를 닮은 건축물: <span className="underline decoration-2" style={{ textDecorationColor: personality.color }}>{personality.building.name}</span>
               </h3>
-              
+
               {/* 건축물 이미지 */}
-              <div className="relative w-full h-48 md:h-64 rounded-xl overflow-hidden mb-4">
+              <div className="relative w-full rounded-xl overflow-hidden mb-4">
                 <Image
                   src={`/images/buildings/${topPersonality}.png`}
                   alt={personality.building.name}
-                  fill
-                  className="object-cover"
+                  width={1200}
+                  height={800}
+                  className="w-full h-auto"
                   sizes="(max-width: 768px) 100vw, 800px"
+                  priority
                 />
               </div>
-              
+
               <p className="text-slate-600 leading-relaxed mb-4">
                 {personality.building.description}
               </p>
-              <div 
+              <div
                 className="p-4 rounded-xl border-l-4"
                 style={{ backgroundColor: personality.color + '10', borderColor: personality.color }}
               >

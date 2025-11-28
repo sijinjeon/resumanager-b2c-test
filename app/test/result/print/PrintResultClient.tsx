@@ -302,11 +302,10 @@ export default function PrintResultClient() {
               }}></span>
               나를 닮은 건축물: <span style={{ textDecoration: 'underline', textDecorationColor: personality.color, textDecorationThickness: '2px' }}>{personality.building.name}</span>
             </h3>
-            
+
             {/* 건축물 이미지 */}
             <div style={{
               width: '100%',
-              height: '150px',
               borderRadius: '8px',
               overflow: 'hidden',
               marginBottom: '12px',
@@ -317,12 +316,12 @@ export default function PrintResultClient() {
                 alt={personality.building.name}
                 style={{
                   width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
+                  height: 'auto',
+                  display: 'block',
                 }}
               />
             </div>
-            
+
             <p style={{
               fontSize: '12px',
               lineHeight: '1.7',
