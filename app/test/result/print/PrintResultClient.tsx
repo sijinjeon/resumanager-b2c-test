@@ -300,8 +300,29 @@ export default function PrintResultClient() {
                 borderRadius: '50%',
                 background: personality.color,
               }}></span>
-              나를 닮은 건축물: {personality.building.name}
+              나를 닮은 건축물: <span style={{ textDecoration: 'underline', textDecorationColor: personality.color, textDecorationThickness: '2px' }}>{personality.building.name}</span>
             </h3>
+            
+            {/* 건축물 이미지 */}
+            <div style={{
+              width: '100%',
+              height: '150px',
+              borderRadius: '8px',
+              overflow: 'hidden',
+              marginBottom: '12px',
+            }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={`/images/buildings/${personalityType}.png`}
+                alt={personality.building.name}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                }}
+              />
+            </div>
+            
             <p style={{
               fontSize: '12px',
               lineHeight: '1.7',

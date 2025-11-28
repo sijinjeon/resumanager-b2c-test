@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 import questions from '@/data/questions.json'
 import personalities from '@/data/personalities.json'
 import type { Answer, PersonalityScores, PersonalityType, Personality } from '@/lib/types'
@@ -279,8 +280,20 @@ export default function TestResultPage() {
             <div className="border-t pt-8">
               <h3 className="text-lg font-bold text-slate-700 mb-4 flex items-center gap-2">
                 <span style={{ color: personality.color }}>●</span>
-                나를 닮은 건축물: {personality.building.name}
+                나를 닮은 건축물: <span className="underline decoration-2" style={{ textDecorationColor: personality.color }}>{personality.building.name}</span>
               </h3>
+              
+              {/* 건축물 이미지 */}
+              <div className="relative w-full h-48 md:h-64 rounded-xl overflow-hidden mb-4">
+                <Image
+                  src={`/images/buildings/${topPersonality}.png`}
+                  alt={personality.building.name}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 800px"
+                />
+              </div>
+              
               <p className="text-slate-600 leading-relaxed mb-4">
                 {personality.building.description}
               </p>
