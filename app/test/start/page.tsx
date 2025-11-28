@@ -104,8 +104,9 @@ export default function TestStartPage() {
   }
 
   const question = questions[currentQuestion] as Question
-  const completedCount = answers.length
-  const progress = (completedCount / questions.length) * 100
+  // 사용자의 요청에 따라 현재 문항 번호를 기준으로 진행률 표시 (0/25, 1/25 ...)
+  const displayCount = currentQuestion
+  const progress = (displayCount / questions.length) * 100
   const currentAnswer = getCurrentAnswer()
 
   return (
@@ -115,7 +116,7 @@ export default function TestStartPage() {
         <div className="mb-6 md:mb-8">
           <div className="flex justify-between items-center mb-2">
             <span className="text-xs md:text-sm font-semibold text-gray-600">
-              {completedCount} / {questions.length} 완료
+              {displayCount} / {questions.length} 완료
             </span>
             <span className="text-xs md:text-sm font-semibold text-primary">
               {Math.round(progress)}% 완료
@@ -154,20 +155,17 @@ export default function TestStartPage() {
                   <button
                     key={option.value}
                     onClick={() => handleAnswer(option.value)}
-                    className={`flex flex-col items-center gap-2 p-3 md:p-4 rounded-2xl transition-all duration-300 min-w-[60px] md:min-w-[80px] ${
-                      currentAnswer === option.value
+                    className={`flex flex-col items-center gap-2 p-3 md:p-4 rounded-2xl transition-all duration-300 min-w-[60px] md:min-w-[80px] ${currentAnswer === option.value
                         ? 'bg-primary text-white scale-105 shadow-lg ring-4 ring-primary/20'
                         : 'bg-slate-50 text-slate-600 hover:bg-primary/10 hover:text-primary border-2 border-transparent hover:border-primary/30'
-                    }`}
+                      }`}
                   >
-                    <span className={`text-2xl md:text-3xl font-bold ${
-                      currentAnswer === option.value ? 'text-white' : 'text-slate-400'
-                    }`}>
+                    <span className={`text-2xl md:text-3xl font-bold ${currentAnswer === option.value ? 'text-white' : 'text-slate-400'
+                      }`}>
                       {option.value}
                     </span>
-                    <span className={`text-xs md:text-sm font-medium whitespace-nowrap ${
-                      currentAnswer === option.value ? 'text-white/90' : 'text-slate-500'
-                    }`}>
+                    <span className={`text-xs md:text-sm font-medium whitespace-nowrap ${currentAnswer === option.value ? 'text-white/90' : 'text-slate-500'
+                      }`}>
                       {option.shortLabel}
                     </span>
                   </button>
