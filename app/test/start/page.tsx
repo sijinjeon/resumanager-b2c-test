@@ -104,7 +104,8 @@ export default function TestStartPage() {
   }
 
   const question = questions[currentQuestion] as Question
-  const progress = ((currentQuestion + 1) / questions.length) * 100
+  const completedCount = answers.length
+  const progress = (completedCount / questions.length) * 100
   const currentAnswer = getCurrentAnswer()
 
   return (
@@ -114,7 +115,7 @@ export default function TestStartPage() {
         <div className="mb-6 md:mb-8">
           <div className="flex justify-between items-center mb-2">
             <span className="text-xs md:text-sm font-semibold text-gray-600">
-              질문 {currentQuestion + 1} / {questions.length}
+              {completedCount} / {questions.length} 완료
             </span>
             <span className="text-xs md:text-sm font-semibold text-primary">
               {Math.round(progress)}% 완료
