@@ -42,8 +42,8 @@ export default function TestResultPage() {
 
       const savedAnswers = JSON.parse(saved) as Answer[]
 
-      // 모든 질문에 답변했는지 확인
-      if (savedAnswers.length < questions.length) {
+      // 모든 질문에 답변했는지 확인 (총 25문항)
+      if (savedAnswers.length < 25) {
         router.push('/test/start')
         return
       }
