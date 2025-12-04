@@ -1,4 +1,7 @@
+'use client'
+
 import Link from 'next/link'
+import MailingListForm from './components/MailingListForm'
 
 export default function Home() {
   return (
@@ -24,10 +27,15 @@ export default function Home() {
               로그인
             </Link>
             <Link
-              href="/signup"
+              href="/"
+              onClick={(e: React.MouseEvent) => {
+                e.preventDefault()
+                alert('서비스 준비 중입니다. 메일링 리스트를 등록해주세요!')
+                document.getElementById('mailing-section')?.scrollIntoView({ behavior: 'smooth' })
+              }}
               className="px-4 md:px-6 py-2 md:py-2.5 text-xs md:text-sm font-medium text-white bg-[#ef6b3b] hover:bg-[#ef6b3b]/90 rounded-xl transition-all shadow-lg shadow-[#ef6b3b]/20 hover:shadow-[#ef6b3b]/40 hover:-translate-y-0.5"
             >
-              시작하기
+              서비스 오픈 알림
             </Link>
           </div>
         </nav>
@@ -42,29 +50,20 @@ export default function Home() {
           </div>
 
           <h1 className="text-4xl md:text-8xl font-extrabold mb-6 md:mb-8 tracking-tight leading-tight animate-fade-in-up delay-100">
-            나의 커리어 강점을
-            <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ef6b3b] to-[#ff8f6b]">
-              발견하세요
-            </span>
+            이력서는 강점진단부터!
           </h1>
 
           <p className="text-base md:text-2xl text-slate-600 mb-8 md:mb-12 max-w-xl md:max-w-2xl leading-relaxed animate-fade-in-up delay-200 px-4">
-            25개 질문으로 알아보는 나의 숨겨진 잠재력.
+            나만의 커리어 스토리를
             <br className="hidden md:block" />
-            지금 바로 무료 리포트를 받아보세요.
+            AI 커리어 컨설턴트와 정리해보세요
+            <br className="hidden md:block" />
+            뻔한 내용의 이력서, 자소서는 이제 그만.
+            <br className="hidden md:block" />
+            레쥬매니저와 함께 합격하는 지원서를 완성하세요.
           </p>
 
-          <Link
-            href="/login"
-            className="group relative inline-flex items-center gap-2 md:gap-3 px-8 md:px-10 py-4 md:py-5 text-base md:text-lg font-bold text-white bg-[#ef6b3b] rounded-2xl transition-all animate-pulse-glow hover:scale-105 animate-fade-in-up delay-300"
-          >
-            <span className="relative z-10">무료로 진단하기</span>
-            <svg className="w-4 h-4 md:w-5 md:h-5 relative z-10 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-            </svg>
-            <div className="absolute inset-0 rounded-2xl bg-white/20 blur-sm opacity-0 group-hover:opacity-100 transition-opacity" />
-          </Link>
+          <MailingListForm />
 
           {/* Features Section - Redesigned & Mobile Optimized */}
           <div className="w-full max-w-4xl mx-auto mt-16 md:mt-24 animate-fade-in-up delay-300">

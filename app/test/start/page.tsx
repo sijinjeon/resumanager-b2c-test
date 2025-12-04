@@ -7,11 +7,11 @@ import questions from '@/data/questions.json'
 import type { Question, Answer, AnswerValue, LIKERT_LABELS } from '@/lib/types'
 
 const LIKERT_OPTIONS = [
-  { value: 1 as AnswerValue, label: '전혀 아니다', shortLabel: '전혀' },
+  { value: 1 as AnswerValue, label: '전혀 아니다', shortLabel: '전혀 아니다' },
   { value: 2 as AnswerValue, label: '아니다', shortLabel: '아니다' },
   { value: 3 as AnswerValue, label: '보통이다', shortLabel: '보통' },
   { value: 4 as AnswerValue, label: '그렇다', shortLabel: '그렇다' },
-  { value: 5 as AnswerValue, label: '매우 그렇다', shortLabel: '매우' },
+  { value: 5 as AnswerValue, label: '매우 그렇다', shortLabel: '매우 그렇다' },
 ]
 
 export default function TestStartPage() {

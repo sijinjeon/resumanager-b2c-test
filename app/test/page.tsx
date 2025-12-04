@@ -68,9 +68,9 @@ export default function TestPage() {
         {/* 테스트 시작 카드 */}
         <div className="card bg-white shadow-2xl">
           <div className="card-body items-center text-center">
-            <h2 className="card-title text-3xl mb-4">레쥬매니저을 시작합니다</h2>
+            <h2 className="card-title text-3xl mb-4">레쥬매니저 커리어 (강점진단)을 시작합니다</h2>
             <p className="text-lg text-gray-600 mb-8">
-              25개의 질문을 통해 당신의 커리어 강점을 발견해보세요
+              25개의 질문을 통해 당신만의 강점을 발견해보세요!
             </p>
 
             <div className="w-full mb-8 bg-white/80 backdrop-blur-xl border border-slate-200/60 shadow-xl shadow-slate-200/40 rounded-3xl p-6 md:p-10 flex flex-col md:flex-row items-center justify-between divide-y md:divide-y-0 md:divide-x divide-slate-100">

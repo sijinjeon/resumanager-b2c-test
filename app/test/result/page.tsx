@@ -3,12 +3,11 @@
 import { useEffect, useState, useRef } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import Image from 'next/image'
 import questions from '@/data/questions.json'
 import personalities from '@/data/personalities.json'
 import type { Answer, PersonalityScores, PersonalityType, Personality } from '@/lib/types'
-import html2canvas from 'html2canvas'
-import { jsPDF } from 'jspdf'
 
 export default function TestResultPage() {
   const [user, setUser] = useState<any>(null)
@@ -152,56 +151,48 @@ export default function TestResultPage() {
   }
 
   const handleDownloadPDF = async () => {
-    if (!printRef.current || !topPersonality || !user) return
-
-    setDownloading(true)
-    try {
-      const element = printRef.current
-      const canvas = await html2canvas(element, {
-        scale: 2,
-        useCORS: true,
-        logging: false,
-        backgroundColor: '#ffffff'
-      })
-
-      const imgData = canvas.toDataURL('image/png')
-      const pdf = new jsPDF('p', 'mm', 'a4')
-      const pdfWidth = pdf.internal.pageSize.getWidth()
-      const pdfHeight = pdf.internal.pageSize.getHeight()
-      const imgWidth = canvas.width
-      const imgHeight = canvas.height
-      const ratio = pdfWidth / imgWidth
-      const contentHeight = imgHeight * ratio
-
-      let heightLeft = contentHeight
-      let position = 0
-
-      pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, contentHeight)
-      heightLeft -= pdfHeight
-
-      while (heightLeft > 0) {
-        position -= pdfHeight // Move image up by one page height
-        pdf.addPage()
-        pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, contentHeight)
-        heightLeft -= pdfHeight
-      }
-
-      const userEmailId = getEmailId(user.email)
-      const date = new Date().toISOString().split('T')[0]
-      // UTF-8 filename handling is automatic in modern browsers, but we ensure safe characters
-      const filename = `${userEmailId}_strength_report_${date}.pdf`
-
-      pdf.save(filename)
-    } catch (error) {
-      console.error('PDF generation failed:', error)
-      alert('PDF 생성에 실패했습니다.')
-    } finally {
-      setDownloading(false)
-    }
+    alert("PDF 다운로드 준비중입니다. 브라우저에서 인쇄를 통해 다운로드 받아주세요")
   }
 
-  const handleSendEmail = () => {
-    alert('💡 이메일 전송 방법:\n\n1. [PDF로 다운로드] 클릭\n2. 저장된 PDF를 이메일에 첨부')
+  const [emailInput, setEmailInput] = useState('')
+  const [emailSent, setEmailSent] = useState(false)
+
+  const handleSendEmail = async () => {
+    if (!emailInput) {
+      alert('이메일 주소를 입력해주세요.')
+      return
+    }
+    
+    // 이메일 형식 검증
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(emailInput)) {
+      alert('올바른 이메일 형식이 아닙니다.')
+      return
+    }
+
+    setSending(true)
+    
+    try {
+      const { error } = await supabase
+        .from('mailing_list')
+        .insert({ email: emailInput })
+
+      if (error) {
+        if (error.code === '23505') { // Unique violation
+          alert('이미 신청해주셨네요. 감사합니다.')
+        } else {
+          console.error('메일링 리스트 등록 오류:', error)
+          alert('오류가 발생했습니다. 잠시 후 다시 시도해주세요.')
+        }
+      } else {
+        setEmailSent(true)
+      }
+    } catch (error) {
+      console.error('예기치 않은 오류:', error)
+      alert('오류가 발생했습니다. 잠시 후 다시 시도해주세요.')
+    } finally {
+      setSending(false)
+    }
   }
 
   // 이메일에서 ID 추출 (@ 앞 부분)
@@ -349,10 +340,11 @@ export default function TestResultPage() {
           </div>
         </div>
 
-        {/* 액션 버튼 */}
-        <div className="flex flex-col sm:flex-row gap-4 mt-8">
+        {/* 액션 버튼 및 메일링 리스트 */}
+        <div className="flex flex-col gap-6 mt-12 max-w-2xl mx-auto">
+          {/* PDF 다운로드 */}
           <button
-            className="btn btn-primary btn-lg flex-1"
+            className="btn btn-primary btn-lg w-full text-lg shadow-lg shadow-primary/20"
             onClick={handleDownloadPDF}
             disabled={downloading}
           >
@@ -362,23 +354,57 @@ export default function TestResultPage() {
                 생성 중...
               </>
             ) : (
-              <>📄 PDF로 다운로드</>
+              <>📄 PDF로 결과 다운로드</>
             )}
           </button>
-          <button
-            className="btn btn-outline btn-lg flex-1"
-            onClick={handleSendEmail}
-            disabled={sending}
+
+          {/* 이메일 입력 섹션 */}
+          <div className="bg-white p-6 md:p-8 rounded-2xl shadow-xl border border-slate-100">
+            <h3 className="text-xl font-bold text-slate-800 mb-3 flex items-center gap-2">
+              <span>📧</span> 이메일로 결과 받기
+            </h3>
+            <p className="text-slate-600 mb-6 leading-relaxed text-sm md:text-base">
+              이메일 주소를 입력하시면 <span className="font-bold text-[#ef6b3b]">레쥬매니저 메일링 리스트</span>에 추가되고, 
+              향후 레쥬매니저 서비스 오픈 시 <span className="font-bold text-slate-800">제일 먼저 소식을 받아보실 수 있습니다.</span>
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-3">
+              <input 
+                type="email" 
+                placeholder="이메일 주소를 입력하세요" 
+                className="input input-bordered input-lg flex-1 bg-slate-50 focus:bg-white transition-colors"
+                value={emailInput}
+                onChange={(e) => setEmailInput(e.target.value)}
+                disabled={emailSent || sending}
+              />
+              <button
+                className={`btn btn-lg ${emailSent ? 'btn-success text-white' : 'btn-neutral'}`}
+                onClick={handleSendEmail}
+                disabled={sending || emailSent}
+              >
+                {sending ? (
+                  <span className="loading loading-spinner"></span>
+                ) : emailSent ? (
+                  '신청 완료 ✨'
+                ) : (
+                  '받아보기'
+                )}
+              </button>
+            </div>
+            {emailSent && (
+              <p className="text-green-600 text-sm mt-3 font-medium animate-fade-in-up">
+                ✅ 메일링 리스트에 등록되었습니다.
+              </p>
+            )}
+          </div>
+
+          {/* 홈페이지 둘러보기 */}
+          <Link 
+            href="/"
+            className="btn btn-outline btn-lg w-full hover:bg-slate-50 border-slate-300 text-slate-600"
           >
-            {sending ? (
-              <>
-                <span className="loading loading-spinner"></span>
-                전송 중...
-              </>
-            ) : (
-              <>📧 이메일로 받기</>
-            )}
-          </button>
+            🏠 레쥬매니저 홈페이지 둘러보기
+          </Link>
         </div>
 
         {/* 다시 하기 */}
