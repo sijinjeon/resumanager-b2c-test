@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import questions from '@/data/questions.json'
-import type { Question, Answer, AnswerValue, LIKERT_LABELS } from '@/lib/types'
+import type { Question, Answer, AnswerValue, LIKERT_LABELS, PersonalityType } from '@/lib/types'
 
 const LIKERT_OPTIONS = [
   { value: 1 as AnswerValue, label: '전혀 아니다', shortLabel: '전혀 아니다' },
@@ -41,7 +41,10 @@ export default function TestStartPage() {
       if (savedQuestionIds) {
         // 기존에 진행 중인 테스트 질문 복원
         const ids = JSON.parse(savedQuestionIds) as number[]
-        selectedQuestions = ids.map(id => questions.find(q => q.id === id)!).filter(Boolean)
+        selectedQuestions = ids.map(id => {
+          const q = questions.find(q => q.id === id)
+          return q ? { ...q, type: q.type as PersonalityType } : null
+        }).filter((q): q is Question => q !== null)
         
         // 만약 저장된 질문 ID가 현재 전체 질문 목록에 없으면 (데이터 변경 등) 새로 생성
         if (selectedQuestions.length !== 25) {
@@ -83,7 +86,7 @@ export default function TestStartPage() {
     const grouped: Record<string, Question[]> = {}
     questions.forEach(q => {
       if (!grouped[q.type]) grouped[q.type] = []
-      grouped[q.type].push(q as Question)
+      grouped[q.type].push({ ...q, type: q.type as PersonalityType })
     })
 
     const selected: Question[] = []
@@ -103,9 +106,12 @@ export default function TestStartPage() {
     })
 
     // 3. 남은 질문들 중에서 1개 랜덤 추출 (총 25개)
-    const remaining = questions.filter(q => !selected.find(s => s.id === q.id))
+    const remaining = questions
+      .filter(q => !selected.find(s => s.id === q.id))
+      .map(q => ({ ...q, type: q.type as PersonalityType }))
+      
     const randomIdx = Math.floor(Math.random() * remaining.length)
-    selected.push(remaining[randomIdx] as Question)
+    selected.push(remaining[randomIdx])
 
     // 4. 전체 셔플 (순서 섞기)
     for (let i = selected.length - 1; i > 0; i--) {
