@@ -3,36 +3,30 @@
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 
-export default function LoginPage() {
+export default function ResetPasswordPage() {
   const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
+  const [message, setMessage] = useState('')
   const [error, setError] = useState('')
-  const router = useRouter()
   const supabase = createClient()
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleResetPassword = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
+    setMessage('')
     setError('')
 
     try {
-      const { data, error: signInError } = await supabase.auth.signInWithPassword({
-        email,
-        password,
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${location.origin}/auth/callback?next=/update-password`,
       })
 
-      if (signInError) throw signInError
+      if (error) throw error
 
-      if (data.user) {
-        // 로그인 성공
-        router.push('/test')
-        router.refresh()
-      }
+      setMessage('비밀번호 재설정 링크가 이메일로 전송되었습니다.')
     } catch (err: any) {
-      setError(err.message || '로그인에 실패했습니다.')
+      setError(err.message || '오류가 발생했습니다. 다시 시도해주세요.')
     } finally {
       setLoading(false)
     }
@@ -41,17 +35,26 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white flex items-center justify-center p-6">
       <div className="w-full max-w-md bg-white border border-slate-200 rounded-xl shadow-lg p-8">
-        {/* 헤더 */}
         <div className="text-center mb-8">
           <Link href="/" className="flex items-center justify-center gap-2 mb-6">
             <span className="text-3xl">💼</span>
             <span className="text-2xl font-bold text-slate-900">레쥬매니저</span>
           </Link>
-          <h2 className="text-2xl font-bold text-slate-900 mb-2">로그인</h2>
-          <p className="text-sm text-slate-600">다시 만나서 반가워요!</p>
+          <h2 className="text-2xl font-bold text-slate-900 mb-2">비밀번호 찾기</h2>
+          <p className="text-sm text-slate-600">가입한 이메일 주소를 입력해주세요.</p>
         </div>
 
-        {/* 에러 메시지 - shadcn alert */}
+        {message && (
+          <div className="bg-green-50 border border-green-200 text-green-800 rounded-lg p-4 mb-6 text-sm">
+            <div className="flex items-center gap-2">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span>{message}</span>
+            </div>
+          </div>
+        )}
+
         {error && (
           <div className="bg-red-50 border border-red-200 text-red-800 rounded-lg p-4 mb-6 text-sm">
             <div className="flex items-center gap-2">
@@ -63,9 +66,7 @@ export default function LoginPage() {
           </div>
         )}
 
-        {/* 로그인 폼 */}
-        <form onSubmit={handleLogin} className="space-y-4">
-          {/* 이메일 - shadcn input */}
+        <form onSubmit={handleResetPassword} className="space-y-4">
           <div className="space-y-2">
             <label className="text-sm font-medium text-slate-900">
               이메일
@@ -80,22 +81,6 @@ export default function LoginPage() {
             />
           </div>
 
-          {/* 비밀번호 - shadcn input */}
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-slate-900">
-              비밀번호
-            </label>
-            <input
-              type="password"
-              placeholder="비밀번호를 입력하세요"
-              className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#ef6b3b] focus:border-transparent transition-all"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-
-          {/* 로그인 버튼 - shadcn button */}
           <button
             type="submit"
             className="w-full px-4 py-3 text-sm font-semibold text-white bg-[#ef6b3b] hover:bg-[#ef6b3b]/90 rounded-lg transition-all shadow-sm hover:shadow disabled:opacity-50 disabled:cursor-not-allowed mt-2"
@@ -109,31 +94,15 @@ export default function LoginPage() {
                 </svg>
                 처리 중...
               </span>
-            ) : '로그인'}
+            ) : '비밀번호 재설정 메일 보내기'}
           </button>
-          
+
           <div className="text-center">
-            <Link href="/reset-password" className="text-xs text-[#ef6b3b] hover:underline">
-              비밀번호를 잊으셨나요?
+            <Link href="/login" className="text-xs text-slate-500 hover:text-[#ef6b3b] hover:underline">
+              로그인으로 돌아가기
             </Link>
           </div>
         </form>
-
-        {/* 회원가입 링크 - shadcn 스타일 */}
-        <div className="relative my-6">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-slate-200"></div>
-          </div>
-          <div className="relative flex justify-center text-xs">
-            <span className="bg-white px-2 text-slate-500">또는</span>
-          </div>
-        </div>
-        <div className="text-center text-sm">
-          <span className="text-slate-600">아직 계정이 없으신가요? </span>
-          <Link href="/signup" className="font-semibold text-[#ef6b3b] hover:underline">
-            회원가입하기
-          </Link>
-        </div>
       </div>
     </div>
   )

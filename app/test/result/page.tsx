@@ -55,7 +55,7 @@ export default function TestResultPage() {
       setScores(calculatedScores)
 
       // 최종 성향 결정 (가장 높은 점수의 성향)
-      const topType = determineTopPersonality(calculatedScores)
+      const topType = determineTopPersonality(calculatedScores, savedAnswers)
       setTopPersonality(topType)
 
       // Supabase에 결과 저장
@@ -144,9 +144,31 @@ export default function TestResultPage() {
   }
 
   // 가장 높은 점수의 성향 결정
-  const determineTopPersonality = (scores: PersonalityScores): PersonalityType => {
+  const determineTopPersonality = (scores: PersonalityScores, answeredQuestions: Answer[]): PersonalityType => {
+    // 답변한 질문들을 바탕으로 각 성향별 질문 개수 계산
+    const questionCounts: Record<string, number> = {}
+    
+    answeredQuestions.forEach(answer => {
+      const question = questions.find(q => q.id === answer.questionId)
+      if (question) {
+        const type = question.type as string
+        questionCounts[type] = (questionCounts[type] || 0) + 1
+      }
+    })
+
     const entries = Object.entries(scores) as [PersonalityType, number][]
-    entries.sort((a, b) => b[1] - a[1])
+    
+    // 평균 점수로 정렬 (총점 / 문항수)
+    // 문항 수가 다를 경우(예: challenge는 3개, 나머지는 2개) 총점만으로 비교하면 불공정하므로 평균으로 비교
+    entries.sort((a, b) => {
+      const countA = questionCounts[a[0]] || 1
+      const countB = questionCounts[b[0]] || 1
+      const avgA = a[1] / countA
+      const avgB = b[1] / countB
+      
+      return avgB - avgA
+    })
+
     return entries[0][0]
   }
 

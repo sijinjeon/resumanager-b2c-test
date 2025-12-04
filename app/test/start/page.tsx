@@ -19,6 +19,7 @@ export default function TestStartPage() {
   const [answers, setAnswers] = useState<Answer[]>([])
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)
+  const [testQuestions, setTestQuestions] = useState<Question[]>([])
   const router = useRouter()
   const supabase = createClient()
 
@@ -33,14 +34,39 @@ export default function TestStartPage() {
 
       setUser(user)
 
-      // 저장된 답변 불러오기 (localStorage에서)
+      // 1. 테스트 질문 목록 설정 (랜덤 생성 또는 복원)
+      const savedQuestionIds = localStorage.getItem(`test_question_ids_${user.id}`)
+      let selectedQuestions: Question[] = []
+
+      if (savedQuestionIds) {
+        // 기존에 진행 중인 테스트 질문 복원
+        const ids = JSON.parse(savedQuestionIds) as number[]
+        selectedQuestions = ids.map(id => questions.find(q => q.id === id)!).filter(Boolean)
+        
+        // 만약 저장된 질문 ID가 현재 전체 질문 목록에 없으면 (데이터 변경 등) 새로 생성
+        if (selectedQuestions.length !== 25) {
+          selectedQuestions = generateRandomQuestions()
+          localStorage.setItem(`test_question_ids_${user.id}`, JSON.stringify(selectedQuestions.map(q => q.id)))
+          // 답변도 초기화
+          localStorage.removeItem(`test_answers_${user.id}`)
+          setAnswers([])
+        }
+      } else {
+        // 새로운 테스트 질문 생성
+        selectedQuestions = generateRandomQuestions()
+        localStorage.setItem(`test_question_ids_${user.id}`, JSON.stringify(selectedQuestions.map(q => q.id)))
+      }
+      
+      setTestQuestions(selectedQuestions)
+
+      // 2. 저장된 답변 불러오기
       const saved = localStorage.getItem(`test_answers_${user.id}`)
       if (saved) {
         const savedAnswers = JSON.parse(saved)
         setAnswers(savedAnswers)
         // 마지막 답변 위치로 이동
         const lastAnswered = savedAnswers.length
-        if (lastAnswered < questions.length) {
+        if (lastAnswered < selectedQuestions.length) {
           setCurrentQuestion(lastAnswered)
         }
       }
@@ -51,9 +77,49 @@ export default function TestStartPage() {
     checkUser()
   }, [router, supabase])
 
+  // 랜덤 질문 생성 로직
+  const generateRandomQuestions = (): Question[] => {
+    // 1. 성향별로 그룹화
+    const grouped: Record<string, Question[]> = {}
+    questions.forEach(q => {
+      if (!grouped[q.type]) grouped[q.type] = []
+      grouped[q.type].push(q as Question)
+    })
+
+    const selected: Question[] = []
+    const types = Object.keys(grouped)
+    
+    // 2. 각 성향(12개)에서 2개씩 랜덤 추출 (총 24개)
+    types.forEach(type => {
+      const pool = [...grouped[type]]
+      // 셔플
+      for (let i = pool.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [pool[i], pool[j]] = [pool[j], pool[i]];
+      }
+      // 앞의 2개 선택
+      selected.push(pool[0])
+      selected.push(pool[1])
+    })
+
+    // 3. 남은 질문들 중에서 1개 랜덤 추출 (총 25개)
+    const remaining = questions.filter(q => !selected.find(s => s.id === q.id))
+    const randomIdx = Math.floor(Math.random() * remaining.length)
+    selected.push(remaining[randomIdx] as Question)
+
+    // 4. 전체 셔플 (순서 섞기)
+    for (let i = selected.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [selected[i], selected[j]] = [selected[j], selected[i]];
+    }
+
+    return selected
+  }
+
   const handleAnswer = (value: AnswerValue) => {
+    const currentQ = testQuestions[currentQuestion]
     const newAnswer: Answer = {
-      questionId: questions[currentQuestion].id,
+      questionId: currentQ.id,
       value
     }
 
@@ -66,7 +132,7 @@ export default function TestStartPage() {
     }
 
     // 다음 질문으로 자동 이동
-    if (currentQuestion < questions.length - 1) {
+    if (currentQuestion < testQuestions.length - 1) {
       setTimeout(() => {
         setCurrentQuestion(currentQuestion + 1)
       }, 400)
@@ -85,14 +151,16 @@ export default function TestStartPage() {
   }
 
   const goToNext = () => {
-    const currentAnswer = answers.find(a => a.questionId === questions[currentQuestion].id)
-    if (currentAnswer && currentQuestion < questions.length - 1) {
+    const currentQ = testQuestions[currentQuestion]
+    const currentAnswer = answers.find(a => a.questionId === currentQ.id)
+    if (currentAnswer && currentQuestion < testQuestions.length - 1) {
       setCurrentQuestion(currentQuestion + 1)
     }
   }
 
   const getCurrentAnswer = () => {
-    return answers.find(a => a.questionId === questions[currentQuestion].id)?.value
+    if (!testQuestions[currentQuestion]) return undefined
+    return answers.find(a => a.questionId === testQuestions[currentQuestion].id)?.value
   }
 
   if (loading) {
@@ -103,10 +171,19 @@ export default function TestStartPage() {
     )
   }
 
-  const question = questions[currentQuestion] as Question
+  // 데이터 로딩 중이거나 에러 시 처리
+  if (!testQuestions.length) {
+     return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p>질문 데이터를 불러오는 중 오류가 발생했습니다.</p>
+      </div>
+    )
+  }
+
+  const question = testQuestions[currentQuestion]
   // 사용자의 요청에 따라 현재 문항 번호를 기준으로 진행률 표시 (0/25, 1/25 ...)
   const displayCount = currentQuestion
-  const progress = (displayCount / questions.length) * 100
+  const progress = (displayCount / testQuestions.length) * 100
   const currentAnswer = getCurrentAnswer()
 
   return (
@@ -116,7 +193,7 @@ export default function TestStartPage() {
         <div className="mb-6 md:mb-8">
           <div className="flex justify-between items-center mb-2">
             <span className="text-xs md:text-sm font-semibold text-gray-600">
-              {displayCount} / {questions.length} 완료
+              {displayCount} / {testQuestions.length} 완료
             </span>
             <span className="text-xs md:text-sm font-semibold text-primary">
               {Math.round(progress)}% 완료
@@ -202,7 +279,7 @@ export default function TestStartPage() {
 
               <button
                 onClick={goToNext}
-                disabled={!currentAnswer || currentQuestion === questions.length - 1}
+                disabled={!currentAnswer || currentQuestion === testQuestions.length - 1}
                 className="btn btn-primary"
               >
                 다음 →
