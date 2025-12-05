@@ -13,7 +13,6 @@ export default function TestResultPage() {
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [downloading, setDownloading] = useState(false)
-  const [sending, setSending] = useState(false)
   const [saveError, setSaveError] = useState<string | null>(null)
   const [answers, setAnswers] = useState<Answer[]>([])
   const [scores, setScores] = useState<PersonalityScores | null>(null)
@@ -176,47 +175,6 @@ export default function TestResultPage() {
     alert("PDF 다운로드 준비중입니다. 브라우저에서 인쇄를 통해 다운로드 받아주세요")
   }
 
-  const [emailInput, setEmailInput] = useState('')
-  const [emailSent, setEmailSent] = useState(false)
-
-  const handleSendEmail = async () => {
-    if (!emailInput) {
-      alert('이메일 주소를 입력해주세요.')
-      return
-    }
-    
-    // 이메일 형식 검증
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(emailInput)) {
-      alert('올바른 이메일 형식이 아닙니다.')
-      return
-    }
-
-    setSending(true)
-    
-    try {
-      const { error } = await supabase
-        .from('mailing_list')
-        .insert({ email: emailInput })
-
-      if (error) {
-        if (error.code === '23505') { // Unique violation
-          alert('이미 신청해주셨네요. 감사합니다.')
-        } else {
-          console.error('메일링 리스트 등록 오류:', error)
-          alert('오류가 발생했습니다. 잠시 후 다시 시도해주세요.')
-        }
-      } else {
-        setEmailSent(true)
-      }
-    } catch (error) {
-      console.error('예기치 않은 오류:', error)
-      alert('오류가 발생했습니다. 잠시 후 다시 시도해주세요.')
-    } finally {
-      setSending(false)
-    }
-  }
-
   // 이메일에서 ID 추출 (@ 앞 부분)
   const getEmailId = (email: string | undefined): string => {
     if (!email) return ''
@@ -366,7 +324,7 @@ export default function TestResultPage() {
         <div className="flex flex-col gap-6 mt-12 max-w-2xl mx-auto">
           {/* PDF 다운로드 */}
           <button
-            className="btn btn-primary btn-lg w-full text-lg shadow-lg shadow-primary/20"
+            className="btn btn-primary btn-lg w-full text-lg text-white shadow-lg shadow-primary/20"
             onClick={handleDownloadPDF}
             disabled={downloading}
           >
@@ -380,53 +338,20 @@ export default function TestResultPage() {
             )}
           </button>
 
-          {/* 이메일 입력 섹션 */}
-          <div className="bg-white p-6 md:p-8 rounded-2xl shadow-xl border border-slate-100">
-            <h3 className="text-xl font-bold text-slate-800 mb-3 flex items-center gap-2">
-              <span>📧</span> 이메일로 결과 받기
-            </h3>
-            <p className="text-slate-600 mb-6 leading-relaxed text-sm md:text-base">
-              이메일 주소를 입력하시면 <span className="font-bold text-[#ef6b3b]">레쥬매니저 메일링 리스트</span>에 추가되고, 
-              향후 레쥬매니저 서비스 오픈 시 <span className="font-bold text-slate-800">제일 먼저 소식을 받아보실 수 있습니다.</span>
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-3">
-              <input 
-                type="email" 
-                placeholder="이메일 주소를 입력하세요" 
-                className="input input-bordered input-lg flex-1 bg-slate-50 focus:bg-white transition-colors"
-                value={emailInput}
-                onChange={(e) => setEmailInput(e.target.value)}
-                disabled={emailSent || sending}
-              />
-              <button
-                className={`btn btn-lg ${emailSent ? 'btn-success text-white' : 'btn-neutral'}`}
-                onClick={handleSendEmail}
-                disabled={sending || emailSent}
-              >
-                {sending ? (
-                  <span className="loading loading-spinner"></span>
-                ) : emailSent ? (
-                  '신청 완료 ✨'
-                ) : (
-                  '받아보기'
-                )}
-              </button>
-            </div>
-            {emailSent && (
-              <p className="text-green-600 text-sm mt-3 font-medium animate-fade-in-up">
-                ✅ 메일링 리스트에 등록되었습니다.
-              </p>
-            )}
-          </div>
-
           {/* 홈페이지 둘러보기 */}
-          <Link 
-            href="/"
-            className="btn btn-outline btn-lg w-full hover:bg-slate-50 border-slate-300 text-slate-600"
-          >
-            🏠 레쥬매니저 홈페이지 둘러보기
-          </Link>
+          <div className="w-full flex flex-col gap-4">
+            <a 
+              href="https://myrm.co.kr/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-outline btn-lg w-full hover:bg-slate-50 border-slate-300 text-slate-600"
+            >
+              🏠 레쥬매니저 홈페이지 둘러보기
+            </a>
+            <p className="text-sm text-slate-500 text-center">
+              레쥬매니저 홈페이지에서 이메일을 등록하면 서비스 오픈 알림을 받을 수 있습니다.
+            </p>
+          </div>
         </div>
 
         {/* 다시 하기 */}

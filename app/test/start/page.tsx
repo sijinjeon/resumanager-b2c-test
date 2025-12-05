@@ -286,7 +286,7 @@ export default function TestStartPage() {
               <button
                 onClick={goToNext}
                 disabled={!currentAnswer || currentQuestion === testQuestions.length - 1}
-                className="btn btn-primary"
+                className="btn btn-primary text-white"
               >
                 다음 →
               </button>

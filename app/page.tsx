@@ -1,11 +1,10 @@
 'use client'
 
 import Link from 'next/link'
-import MailingListForm from './components/MailingListForm'
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-slate-50 relative overflow-hidden selection:bg-[#ef6b3b] selection:text-white">
+    <div className="min-h-screen bg-slate-50 relative overflow-x-hidden selection:bg-[#ef6b3b] selection:text-white">
       {/* Background Decoration */}
       <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
         <div className="absolute top-[-10%] right-[-5%] w-[300px] md:w-[500px] h-[300px] md:h-[500px] rounded-full bg-[#ef6b3b]/10 blur-[60px] md:blur-[100px] animate-float" />
@@ -27,15 +26,10 @@ export default function Home() {
               로그인
             </Link>
             <Link
-              href="/"
-              onClick={(e: React.MouseEvent) => {
-                e.preventDefault()
-                alert('서비스 준비 중입니다. 메일링 리스트를 등록해주세요!')
-                document.getElementById('mailing-section')?.scrollIntoView({ behavior: 'smooth' })
-              }}
-              className="px-4 md:px-6 py-2 md:py-2.5 text-xs md:text-sm font-medium text-white bg-[#ef6b3b] hover:bg-[#ef6b3b]/90 rounded-xl transition-all shadow-lg shadow-[#ef6b3b]/20 hover:shadow-[#ef6b3b]/40 hover:-translate-y-0.5"
+              href="/login"
+              className="flex items-center justify-center px-4 md:px-6 py-2 md:py-2.5 text-xs md:text-sm font-medium text-white bg-[#ef6b3b] hover:bg-[#ef6b3b]/90 rounded-xl transition-all shadow-lg shadow-[#ef6b3b]/20 hover:shadow-[#ef6b3b]/40 hover:-translate-y-0.5 text-center"
             >
-              서비스 오픈 알림
+              무료로 강점진단하기
             </Link>
           </div>
         </nav>
@@ -46,24 +40,27 @@ export default function Home() {
         <div className="flex flex-col items-center justify-center min-h-[70vh] md:min-h-[80vh] text-center max-w-5xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-full bg-white/50 border border-slate-200/60 backdrop-blur-sm mb-6 md:mb-8 animate-fade-in-up">
             <span className="flex h-1.5 w-1.5 md:h-2 md:w-2 rounded-full bg-[#ef6b3b] animate-pulse"></span>
-            <span className="text-xs md:text-sm font-medium text-slate-600">과학적인 커리어 성향 분석</span>
+            <span className="text-xs md:text-sm font-medium text-slate-600">이력서는 강점진단부터!</span>
           </div>
 
-          <h1 className="text-4xl md:text-8xl font-extrabold mb-6 md:mb-8 tracking-tight leading-tight animate-fade-in-up delay-100">
-            이력서는 강점진단부터!
+          <h1 className="text-4xl md:text-6xl font-extrabold mb-6 md:mb-8 tracking-tight leading-tight animate-fade-in-up delay-100 text-black">
+            나의 <span className="bg-gradient-to-r from-[#ef6b3b] to-[#ff8f6b] bg-clip-text text-transparent">커리어 강점</span>을
+            <br />
+            발견하세요
           </h1>
 
           <p className="text-base md:text-2xl text-slate-600 mb-8 md:mb-12 max-w-xl md:max-w-2xl leading-relaxed animate-fade-in-up delay-200 px-4">
-            나만의 커리어 스토리를
-            <br className="hidden md:block" />
-            AI 커리어 컨설턴트와 정리해보세요
-            <br className="hidden md:block" />
             뻔한 내용의 이력서, 자소서는 이제 그만.
             <br className="hidden md:block" />
             레쥬매니저와 함께 합격하는 지원서를 완성하세요.
           </p>
 
-          <MailingListForm />
+          <Link 
+            href="/login"
+            className="flex items-center justify-center w-fit mx-auto bg-[#ef6b3b] hover:bg-[#ef6b3b]/90 text-white rounded-xl px-8 py-4 text-lg font-bold shadow-lg shadow-[#ef6b3b]/20 hover:shadow-[#ef6b3b]/40 hover:-translate-y-0.5 transition-all animate-fade-in-up delay-300"
+          >
+            무료로 강점진단하기
+          </Link>
 
           {/* Features Section - Redesigned & Mobile Optimized */}
           <div className="w-full max-w-4xl mx-auto mt-16 md:mt-24 animate-fade-in-up delay-300">

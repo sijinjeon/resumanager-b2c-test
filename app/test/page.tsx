@@ -113,7 +113,7 @@ export default function TestPage() {
 
             <button
               onClick={() => router.push('/test/start')}
-              className="btn btn-primary btn-lg px-12"
+              className="btn btn-primary btn-lg px-12 text-white"
             >
               테스트 시작하기 →
             </button>

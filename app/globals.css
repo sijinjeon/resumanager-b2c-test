@@ -14,9 +14,9 @@ html,
 body {
   font-family: 'Outfit', sans-serif;
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(to bottom,
+  /* background: linear-gradient(to bottom,
       transparent,
-      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb)); */
   overflow-x: hidden;
   /* Prevent horizontal scroll */
   width: 100%;

@@ -129,8 +129,11 @@ export default function LoginPage() {
           </div>
         </div>
         <div className="text-center text-sm">
-          <span className="text-slate-600">아직 계정이 없으신가요? </span>
-          <Link href="/signup" className="font-semibold text-[#ef6b3b] hover:underline">
+          <span className="text-slate-600 block mb-3">아직 계정이 없으신가요? </span>
+          <Link 
+            href="/signup" 
+            className="block w-full px-4 py-3 font-semibold text-white bg-[#ef6b3b] hover:bg-[#ef6b3b]/90 rounded-lg transition-all shadow-sm hover:shadow"
+          >
             회원가입하기
           </Link>
         </div>
