@@ -322,21 +322,30 @@ export default function TestResultPage() {
 
         {/* 액션 버튼 및 메일링 리스트 */}
         <div className="flex flex-col gap-6 mt-12 max-w-2xl mx-auto">
-          {/* PDF 다운로드 */}
-          <button
-            className="btn btn-primary btn-lg w-full text-lg text-white shadow-lg shadow-primary/20"
-            onClick={handleDownloadPDF}
-            disabled={downloading}
-          >
-            {downloading ? (
-              <>
-                <span className="loading loading-spinner"></span>
-                생성 중...
-              </>
-            ) : (
-              <>📄 PDF로 결과 다운로드</>
-            )}
-          </button>
+          {/* PDF 및 이메일 다운로드 */}
+          <div className="flex flex-col md:flex-row gap-3 w-full">
+            <button
+              className="btn btn-primary btn-lg flex-1 text-lg text-white shadow-lg shadow-primary/20"
+              onClick={handleDownloadPDF}
+              disabled={downloading}
+            >
+              {downloading ? (
+                <>
+                  <span className="loading loading-spinner"></span>
+                  생성 중...
+                </>
+              ) : (
+                <>📄 PDF로 결과 다운로드</>
+              )}
+            </button>
+
+            <button
+              className="btn btn-lg flex-1 text-lg bg-slate-800 text-white hover:bg-slate-700 border-none shadow-lg shadow-slate-800/20"
+              onClick={() => alert("이메일 다운로드 준비중입니다. 브라우저의 인쇄 기능을 통해 받아주세요.")}
+            >
+              📧 이메일로 결과 다운로드
+            </button>
+          </div>
 
           {/* 홈페이지 둘러보기 */}
           <div className="w-full flex flex-col gap-4">
